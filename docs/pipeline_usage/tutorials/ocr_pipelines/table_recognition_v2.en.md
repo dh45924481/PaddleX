@@ -2,12 +2,14 @@
 comments: true
 ---
 
-# General Table Recognition Pipeline v2 User Guide
+# General Table Recognition v2 Pipeline Tutorial
 
 ## 1. Introduction to General Table Recognition Pipeline v2
 Table recognition is a technology that automatically identifies and extracts table content and structure from documents or images. It is widely used in data entry, information retrieval, and document analysis. By using computer vision and machine learning algorithms, table recognition can convert complex table information into editable formats, facilitating further processing and analysis of data.
 
-The General Table Recognition Pipeline v2 is designed to solve table recognition tasks by identifying tables in images and outputting them in HTML format. Unlike the previous version, this pipeline introduces two new modules: table classification and table cell detection, which are integrated with the table structure recognition module to complete the table recognition task. Based on this pipeline, precise predictions of tables can be achieved, covering a wide range of applications in general, manufacturing, finance, transportation, and other fields. The pipeline also provides flexible service deployment options, supporting various hardware and programming languages for integration. Moreover, it offers secondary development capabilities, allowing you to train and optimize models on your own dataset, which can then be seamlessly integrated.
+The General Table Recognition v2 Pipeline is designed to solve table recognition tasks by identifying tables in images and outputting them in HTML format. Unlike the General Table Recognition Pipeline, this pipeline introduces two additional modules: table classification and table cell detection, which are linked with the table structure recognition module to complete the table recognition task. This pipeline can achieve accurate table predictions and is applicable in various fields such as general, manufacturing, finance, and transportation. It also provides flexible service deployment options, supporting multiple programming languages on various hardware. Additionally, it offers custom development capabilities, allowing you to train and fine-tune models on your own dataset, with seamless integration of the trained models.
+
+<b>❗ The General Table Recognition v2 Pipeline is still being optimized and the final version will be released in the next version of PaddleX. In order to maintain the stability of use, you can use the General Table Recognition Pipeline for table processing first, and we will release a notice when the final version of v2 is open-sourced, so please stay tuned!</b>
 
 <img src="https://raw.githubusercontent.com/cuicheng01/PaddleX_doc_images/main/images/pipelines/table_recognition/01.png"/>
 <b>The General Table Recognition Pipeline v2 includes essential modules for table structure recognition, table classification, table cell localization, text detection, and text recognition, as well as optional modules for layout area detection, document image orientation classification, and text image correction.</b>
@@ -88,8 +90,8 @@ The General Table Recognition Pipeline v2 is designed to solve table recognition
 <tr>
 <th>Model</th><th>Model Download Link</th>
 <th>Detection Hmean (%)</th>
-<th>GPU Inference Time (ms)<br/>[Regular Mode / High-Performance Mode]</th>
-<th>CPU Inference Time (ms)<br/>[Regular Mode / High-Performance Mode]</th>
+<th>GPU Inference Time (ms)<br/>[Normal Mode / High-Performance Mode]</th>
+<th>CPU Inference Time (ms)<br/>[Normal Mode / High-Performance Mode]</th>
 <th>Model Storage Size (M)</th>
 <th>Introduction</th>
 </tr>
@@ -119,8 +121,8 @@ The General Table Recognition Pipeline v2 is designed to solve table recognition
 <tr>
 <th>Model</th><th>Model Download Link</th>
 <th>Recognition Avg Accuracy (%)</th>
-<th>GPU Inference Time (ms)<br/>[Regular Mode / High-Performance Mode]</th>
-<th>CPU Inference Time (ms)<br/>[Regular Mode / High-Performance Mode]</th>
+<th>GPU Inference Time (ms)<br/>[Normal Mode / High-Performance Mode]</th>
+<th>CPU Inference Time (ms)<br/>[Normal Mode / High-Performance Mode]</th>
 <th>Model Storage Size (M)</th>
 <th>Introduction</th>
 </tr>
@@ -190,7 +192,7 @@ The lightweight recognition model of PP-OCRv4 has high inference efficiency and 
 <td>The lightweight recognition model of PP-OCRv4 has high inference efficiency and can be deployed on various hardware devices, including edge devices.</td>
 </tr>
 <tr>
-<td>PP-OCRv4_server_rec </td><td><a href="https://paddle-model-ecology.bj.bcebos.com/paddlex/official_inference_model/paddle3.0rc0/PP-OCRv4_server_rec_infer.tar">Inference Model</a>/<a href="https://paddle-model-ecology.bj.bcebos.com/paddlex/official_pretrained_model/PP-OCRv4_server_rec_pretrained.pdparams">Trained Model</a></td>
+<td>PP-OCRv4_server_rec </td><td><a href="https://paddle-model-ecology.bj.bcebos.com/paddlex/official_inference_model/paddle3.0rc0/PP-OCRv4_server_rec_infer.tar">Inference Model</a>/<a href="https://paddle-model-ecology.bj.bcebos.com/paddlex/official_pretrained_model/PP-OCRv4_server_rec_pretrained.pdparams">Training Model</a></td>
 <td>80.61 </td>
 <td>6.58 / 2.43</td>
 <td>33.17 / 33.17</td>
@@ -238,6 +240,7 @@ SVTRv2 is a server text recognition model developed by the OpenOCR team of Fudan
 <th>Introduction</th>
 </tr>
 <tr>
+<td>ch_RepSVTR_rec</td><td><a href="https://paddle-model-ecology.bj.bcebos.com/paddlex/official_inference_model/paddle3.0rc0/ch_RepSVTR_rec_infer.tar">Inference Model</a>/<a href="https://paddle-model-ecology.bj.bcebos.com/paddlex/official_pretrained_model/ch_RepSVTR_rec_pretrained.pdparams">Training Model</a></td>
 <td>ch_RepSVTR_rec</td><td><a href="https://paddle-model-ecology.bj.bcebos.com/paddlex/official_inference_model/paddle3.0rc0/ch_RepSVTR_rec_infer.tar">Inference Model</a>/<a href="https://paddle-model-ecology.bj.bcebos.com/paddlex/official_pretrained_model/ch_RepSVTR_rec_pretrained.pdparams">Training Model</a></td>
 <td>65.07</td>
 <td>5.93 / 1.62</td>
@@ -625,10 +628,12 @@ Online experience is not supported at the moment.
 Before using the General Table Recognition Production Line v2 locally, please ensure that you have completed the installation of the PaddleX wheel package according to the [PaddleX Local Installation Guide](../../../installation/installation.en.md).
 
 ### 2.3 Command Line Experience
-You can quickly experience the table recognition production line with a single command. Use the [test file](https://paddle-model-ecology.bj.bcebos.com/paddlex/imgs/demo_image/table_recognition.jpg) (Note: The link may not be accessible due to network issues or link validity. Please check the link and try again if necessary.) and replace `--input` with the local path for prediction.
+You can quickly experience the table recognition pipeline with a single command. Use the [test file](https://paddle-model-ecology.bj.bcebos.com/paddlex/imgs/demo_image/table_recognition.jpg) (Note: The link may not be accessible due to network issues or link validity. Please check the link and try again if necessary.) and replace `--input` with the local path for prediction.
 
 ```bash
 paddlex --pipeline table_recognition_v2 \
+        --use_doc_orientation_classify=False \
+        --use_doc_unwarping=False \
         --input table_recognition.jpg \
         --save_path ./output \
         --device gpu:0
@@ -637,136 +642,35 @@ paddlex --pipeline table_recognition_v2 \
 <details><summary>👉 <b>After running, the result obtained is: (Click to expand)</b></summary>
 
 ```bash
-{'res': {'input_path': 'table_recognition.jpg', 'model_settings': {'use_doc_preprocessor': False, 'use_layout_detection': True, 'use_ocr_model': True}, 'layout_det_res': {'input_path': None, 'page_index': None, 'boxes': [{'cls_id': 0, 'label': 'Table', 'score': 0.9922188520431519, 'coordinate': [3.0127392, 0.14648987, 547.5102, 127.72023]}]}, 'overall_ocr_res': {'input_path': None, 'page_index': None, 'model_settings': {'use_doc_preprocessor': False, 'use_textline_orientation': False}, 'dt_polys': [array([[234,   6],
-       [316,   6],
-       [316,  25],
-       [234,  25]], dtype=int16), array([[38, 39],
-       [73, 39],
-       [73, 57],
-       [38, 57]], dtype=int16), array([[122,  32],
-       [201,  32],
-       [201,  58],
-       [122,  58]], dtype=int16), array([[227,  34],
-       [346,  34],
-       [346,  57],
-       [227,  57]], dtype=int16), array([[351,  34],
-       [391,  34],
-       [391,  58],
-       [351,  58]], dtype=int16), array([[417,  35],
-       [534,  35],
-       [534,  58],
-       [417,  58]], dtype=int16), array([[34, 70],
-       [78, 70],
-       [78, 90],
-       [34, 90]], dtype=int16), array([[287,  70],
-       [328,  70],
-       [328,  90],
-       [287,  90]], dtype=int16), array([[454,  69],
-       [496,  69],
-       [496,  90],
-       [454,  90]], dtype=int16), array([[ 17, 101],
-       [ 95, 101],
-       [ 95, 124],
-       [ 17, 124]], dtype=int16), array([[144, 101],
-       [178, 101],
-       [178, 122],
-       [144, 122]], dtype=int16), array([[278, 101],
-       [338, 101],
-       [338, 124],
-       [278, 124]], dtype=int16), array([[448, 101],
-       [503, 101],
-       [503, 121],
-       [448, 121]], dtype=int16)], 'text_det_params': {'limit_side_len': 960, 'limit_type': 'max', 'thresh': 0.3, 'box_thresh': 0.6, 'unclip_ratio': 2.0}, 'text_type': 'general', 'textline_orientation_angles': [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1], 'text_rec_score_thresh': 0, 'rec_texts': ['CRuncover', 'Dres', '连续工作3', '取出来放在网上', '没想', '江、整江等八大', 'Abstr', 'rSrivi', '$709.', 'cludingGiv', '2.72', 'Ingcubic', '$744.78'], 'rec_scores': [0.9951260685920715, 0.9943379759788513, 0.9968608021736145, 0.9978817105293274, 0.9985721111297607, 0.9616036415100098, 0.9977153539657593, 0.987593948841095, 0.9906861186027527, 0.9959743618965149, 0.9970152378082275, 0.9977849721908569, 0.9984450936317444], 'rec_polys': [array([[234,   6],
-       [316,   6],
-       [316,  25],
-       [234,  25]], dtype=int16), array([[38, 39],
-       [73, 39],
-       [73, 57],
-       [38, 57]], dtype=int16), array([[122,  32],
-       [201,  32],
-       [201,  58],
-       [122,  58]], dtype=int16), array([[227,  34],
-       [346,  34],
-       [346,  57],
-       [227,  57]], dtype=int16), array([[351,  34],
-       [391,  34],
-       [391,  58],
-       [351,  58]], dtype=int16), array([[417,  35],
-       [534,  35],
-       [534,  58],
-       [417,  58]], dtype=int16), array([[34, 70],
-       [78, 70],
-       [78, 90],
-       [34, 90]], dtype=int16), array([[287,  70],
-       [328,  70],
-       [328,  90],
-       [287,  90]], dtype=int16), array([[454,  69],
-       [496,  69],
-       [496,  90],
-       [454,  90]], dtype=int16), array([[ 17, 101],
-       [ 95, 101],
-       [ 95, 124],
-       [ 17, 124]], dtype=int16), array([[144, 101],
-       [178, 101],
-       [178, 122],
-       [144, 122]], dtype=int16), array([[278, 101],
-       [338, 101],
-       [338, 124],
-       [278, 124]], dtype=int16), array([[448, 101],
-       [503, 101],
-       [503, 121],
-       [448, 121]], dtype=int16)], 'rec_boxes': array([[234,   6, 316,  25],
-       [ 38,  39,  73,  57],
-       [122,  32, 201,  58],
-       [227,  34, 346,  57],
-       [351,  34, 391,  58],
-       [417,  35, 534,  58],
-       [ 34,  70,  78,  90],
-       [287,  70, 328,  90],
-       [454,  69, 496,  90],
-       [ 17, 101,  95, 124],
-       [144, 101, 178, 122],
-       [278, 101, 338, 124],
-       [448, 101, 503, 121]], dtype=int16)}, 'table_res_list': [{'cell_box_list': [array([3.18822289e+00, 1.46489874e-01, 5.46996138e+02, 3.08782365e+01]), array([  3.21032453,  31.1510637 , 110.20750237,  65.14108063]), array([110.18174553,  31.13076188, 213.00813103,  65.02860047]), array([212.96108818,  31.09959008, 404.19618034,  64.99535157]), array([404.08112907,  31.18304802, 547.00864983,  65.0847223 ]), array([  3.21772957,  65.0738733 , 110.33685875,  96.07921387]), array([110.23703575,  65.02486207, 213.08839226,  96.01378419]), array([213.06095695,  64.96230103, 404.28425407,  95.97141816]), array([404.23704338,  65.04879548, 547.01273918,  96.03654267]), array([  3.22793937,  96.08334137, 110.38572502, 127.08698823]), array([110.40586662,  96.10539795, 213.19943047, 127.07002045]), array([213.12627983,  96.0539148 , 404.42686272, 127.02842499]), array([404.33042717,  96.07251526, 547.01273918, 126.45088746])], 'pred_html': '<html><body><table><tr><td colspan="4">CRuncover</td></tr><tr><td>Dres</td><td>连续工作3</td><td>取出来放在网上 没想</td><td>江、整江等八大</td></tr><tr><td>Abstr</td><td></td><td>rSrivi</td><td>$709.</td></tr><tr><td>cludingGiv</td><td>2.72</td><td>Ingcubic</td><td>$744.78</td></tr></table></body></html>', 'table_ocr_pred': {'rec_polys': [array([[234,   6],
-       [316,   6],
-       [316,  25],
-       [234,  25]], dtype=int16), array([[38, 39],
-       [73, 39],
-       [73, 57],
-       [38, 57]], dtype=int16), array([[122,  32],
-       [201,  32],
-       [201,  58],
-       [122,  58]], dtype=int16), array([[227,  34],
-       [346,  34],
-       [346,  57],
-       [227,  57]], dtype=int16), array([[351,  34],
-       [391,  34],
-       [391,  58],
-       [351,  58]], dtype=int16), array([[417,  35],
-       [534,  35],
-       [534,  58],
-       [417,  58]], dtype=int16), array([[34, 70],
-       [78, 70],
-       [78, 90],
-       [34, 90]], dtype=int16), array([[287,  70],
-       [328,  70],
-       [328,  90],
-       [287,  90]], dtype=int16), array([[454,  69],
-       [496,  69],
-       [496,  90],
-       [454,  90]], dtype=int16), array([[ 17, 101],
-       [ 95, 101],
-       [ 95, 124],
-       [ 17, 124]], dtype=int16), array([[144, 101],
-       [178, 101],
-       [178, 122],
-       [144, 122]], dtype=int16), array([[278, 101],
-       [338, 101],
-       [338, 124],
-       [278, 124]], dtype=int16), array([[448, 101],
-       [503, 101],
-       [503, 121],
-       [448, 121]], dtype=int16)], 'rec_texts': ['CRuncover', 'Dres', '连续工作3', '取出来放在网上', '没想', '江、整江等八大', 'Abstr', 'rSrivi', '$709.', 'cludingGiv', '2.72', 'Ingcubic', '$744.78'], 'rec_scores': [0.9951260685920715, 0.9943379759788513, 0.9968608021736145, 0.9978817105293274, 0.9985721111297607, 0.9616036415100098, 0.9977153539657593, 0.987593948841095, 0.9906861186027527, 0.9959743618965149, 0.9970152378082275, 0.9977849721908569, 0.9984450936317444], 'rec_boxes': [array([234,   6, 316,  25], dtype=int16), array([38, 39, 73, 57], dtype=int16), array([122,  32, 201,  58], dtype=int16), array([227,  34, 346,  57], dtype=int16), array([351,  34, 391,  58], dtype=int16), array([417,  35, 534,  58], dtype=int16), array([34, 70, 78, 90], dtype=int16), array([287,  70, 328,  90], dtype=int16), array([454,  69, 496,  90], dtype=int16), array([ 17, 101,  95, 124], dtype=int16), array([144, 101, 178, 122], dtype=int16), array([278, 101, 338, 124], dtype=int16), array([448, 101, 503, 121], dtype=int16)]}}]}}
+{'res': {'input_path': 'table_recognition.jpg', 'page_index': None, 'model_settings': {'use_doc_preprocessor': False, 'use_layout_detection': True, 'use_ocr_model': True}, 'layout_det_res': {'input_path': None, 'page_index': None, 'boxes': [{'cls_id': 0, 'label': 'Table', 'score': 0.9922188520431519, 'coordinate': [3.0127392, 0.14648987, 547.5102, 127.72023]}]}, 'overall_ocr_res': {'input_path': None, 'page_index': None, 'model_settings': {'use_doc_preprocessor': False, 'use_textline_orientation': False}, 'dt_polys': array([[[234,   6],
+        ...,
+        [234,  25]],
+
+       ...,
+
+       [[448, 101],
+        ...,
+        [448, 121]]], dtype=int16), 'text_det_params': {'limit_side_len': 960, 'limit_type': 'max', 'thresh': 0.3, 'box_thresh': 0.6, 'unclip_ratio': 2.0}, 'text_type': 'general', 'textline_orientation_angles': array([-1, ..., -1]), 'text_rec_score_thresh': 0, 'rec_texts': ['CRuncover', 'Dres', '连续工作3', '取出来放在网上', '没想', '江、整江等八大', 'Abstr', 'rSrivi', '$709.', 'cludingGiv', '2.72', 'Ingcubic', '$744.78'], 'rec_scores': array([0.99512607, ..., 0.99844509]), 'rec_polys': array([[[234,   6],
+        ...,
+        [234,  25]],
+
+       ...,
+
+       [[448, 101],
+        ...,
+        [448, 121]]], dtype=int16), 'rec_boxes': array([[234, ...,  25],
+       ...,
+       [448, ..., 121]], dtype=int16)}, 'table_res_list': [{'cell_box_list': [array([ 3.18822289, ..., 30.87823655]), array([ 3.21032453, ..., 65.14108063]), array([110.18174553, ...,  65.02860047]), array([212.96108818, ...,  64.99535157]), array([404.08112907, ...,  65.0847223 ]), array([ 3.21772957, ..., 96.07921387]), array([110.23703575, ...,  96.01378419]), array([213.06095695, ...,  95.97141816]), array([404.23704338, ...,  96.03654267]), array([  3.22793937, ..., 127.08698823]), array([110.40586662, ..., 127.07002045]), array([213.12627983, ..., 127.02842499]), array([404.33042717, ..., 126.45088746])], 'pred_html': '<html><body><table><tr><td colspan="4">CRuncover</td></tr><tr><td>Dres</td><td>连续工作3</td><td>取出来放在网上 没想</td><td>江、整江等八大</td></tr><tr><td>Abstr</td><td></td><td>rSrivi</td><td>$709.</td></tr><tr><td>cludingGiv</td><td>2.72</td><td>Ingcubic</td><td>$744.78</td></tr></table></body></html>', 'table_ocr_pred': {'rec_polys': array([[[234,   6],
+        ...,
+        [234,  25]],
+
+       ...,
+
+       [[448, 101],
+        ...,
+        [448, 121]]], dtype=int16), 'rec_texts': ['CRuncover', 'Dres', '连续工作3', '取出来放在网上', '没想', '江、整江等八大', 'Abstr', 'rSrivi', '$709.', 'cludingGiv', '2.72', 'Ingcubic', '$744.78'], 'rec_scores': array([0.99512607, ..., 0.99844509]), 'rec_boxes': array([[234, ...,  25],
+       ...,
+       [448, ..., 121]], dtype=int16)}}]}}
 ```
 
 The result of the visualization is saved under `save_path`, and the visualization result of table recognition is as follows:
@@ -775,7 +679,7 @@ The result of the visualization is saved under `save_path`, and the visualizatio
 </details>
 
 ### 2.2 Integration via Python Script
-* The above command line is for a quick experience to view the results. Generally, in a project, integration through code is often required. You can complete the production line's fast inference with just a few lines of code. The inference code is as follows:
+* The above command line is for a quick experience to view the results. Generally, in a project, integration through code is often required. You can complete the pipeline's fast inference with just a few lines of code. The inference code is as follows:
 
 ```python
 from paddlex import create_pipeline
@@ -839,198 +743,161 @@ In the above Python script, the following steps are executed:
 
 (2) The `predict()` method of the Universal Table Recognition Pipeline v2 object is called to perform inference prediction. This method returns a `generator`. Below are the parameters and descriptions of the `predict()` method:
 
+
 <table>
 <thead>
 <tr>
 <th>Parameter</th>
-<th>Parameter Description</th>
-<th>Parameter Type</th>
-<th>Optional</th>
+<th>Description</th>
+<th>Type</th>
+<th>Options</th>
 <th>Default Value</th>
 </tr>
 </thead>
 <tr>
 <td><code>input</code></td>
-<td>The data to be predicted, supports multiple input types, required.</td>
+<td>Data to be predicted, supports multiple input types, required.</td>
 <td><code>Python Var|str|list</code></td>
 <td>
 <ul>
 <li><b>Python Var</b>: Image data represented by <code>numpy.ndarray</code>.</li>
-<li><b>str</b>: Local path of an image file or PDF file, such as <code>/root/data/img.jpg</code>; <b>URL link</b>, such as the network URL of an image file or PDF file: <a href="https://paddle-model-ecology.bj.bcebos.com/paddlex/imgs/demo_image/table_recognition.jpg">example</a> (Note: The link may not be accessible due to network issues or the validity of the URL. Please check the URL and try again if necessary.); <b>Local directory</b>, the directory must contain images to be predicted, such as the local path: <code>/root/data/</code> (Currently, prediction of PDF files in directories is not supported; PDF files must be specified with a specific file path).</li>
-<li><b>List</b>: The elements of the list must be of the above types, such as <code>[numpy.ndarray, numpy.ndarray]</code>, <code>["/root/data/img1.jpg", "/root/data/img2.jpg"]</code>, <code>["/root/data1", "/root/data2"]</code>.</li>
+<li><b>str</b>: Local path of image or PDF files, e.g., <code>/root/data/img.jpg</code>; <b>URL link</b>, such as the network URL of an image or PDF file: <a href="https://paddle-model-ecology.bj.bcebos.com/paddlex/imgs/demo_image/table_recognition.jpg">Example</a>; <b>Local directory</b>, the directory should contain images to be predicted, e.g., <code>/root/data/</code> (currently, prediction for PDF files in directories is not supported; PDF files must specify the exact file path).</li>
+<li><b>List</b>: List elements must be of the above types, such as <code>[numpy.ndarray, numpy.ndarray]</code>, <code>[“/root/data/img1.jpg”, “/root/data/img2.jpg”]</code>, <code>[“/root/data1”, “/root/data2”]</code>.</li>
 </ul>
-</td>
-</tr>
-</table>
-
 </td>
 <td><code>None</code></td>
 </tr>
 <tr>
 <td><code>device</code></td>
-<td>Production line inference device</td>
+<td>Inference device.</td>
 <td><code>str|None</code></td>
 <td>
 <ul>
-<li><b>CPU</b>: For example, <code>cpu</code> indicates using the CPU for inference;</li>
-<li><b>GPU</b>: For example, <code>gpu:0</code> indicates using the first GPU for inference;</li>
-<li><b>NPU</b>: For example, <code>npu:0</code> indicates using the first NPU for inference;</li>
-<li><b>XPU</b>: For example, <code>xpu:0</code> indicates using the first XPU for inference;</li>
-<li><b>MLU</b>: For example, <code>mlu:0</code> indicates using the first MLU for inference;</li>
-<li><b>DCU</b>: For example, <code>dcu:0</code> indicates using the first DCU for inference;</li>
-<li><b>None</b>: If set to <code>None</code>, it will default to the value initialized by the production line. During initialization, it will prioritize using the local GPU device 0. If not available, it will use the CPU device.</li>
+<li><b>CPU</b>: Use CPU for inference, e.g., <code>cpu</code>.</li>
+<li><b>GPU</b>: Use the first GPU for inference, e.g., <code>gpu:0</code>.</li>
+<li><b>NPU</b>: Use the first NPU for inference, e.g., <code>npu:0</code>.</li>
+<li><b>XPU</b>: Use the first XPU for inference, e.g., <code>xpu:0</code>.</li>
+<li><b>MLU</b>: Use the first MLU for inference, e.g., <code>mlu:0</code>.</li>
+<li><b>DCU</b>: Use the first DCU for inference, e.g., <code>dcu:0</code>.</li>
+<li><b>None</b>: If set to <code>None</code>, the default value initialized by the production line will be used. During initialization, the local GPU 0 will be prioritized; if unavailable, the CPU will be used.</li>
 </ul>
 </td>
 <td><code>None</code></td>
 </tr>
 <tr>
 <td><code>use_doc_orientation_classify</code></td>
-<td>Whether to use the document orientation classification module</td>
+<td>Whether to use the document orientation classification module.</td>
 <td><code>bool|None</code></td>
 <td>
 <ul>
-<li><b>bool</b>: <code>True</code> or <code>False</code>;</li>
-<li><b>None</b>: If set to <code>None</code>, it will default to the value initialized by the production line, which is initialized as <code>True</code>.</li>
+<li><b>bool</b>: <code>True</code> or <code>False</code>.</li>
+<li><b>None</b>: If set to <code>None</code>, the default value initialized by the production line will be used, initialized as <code>True</code>.</li>
 </ul>
 </td>
 <td><code>None</code></td>
 </tr>
 <tr>
 <td><code>use_doc_unwarping</code></td>
-<td>Whether to use the document unwarping module</td>
+<td>Whether to use the document unwarping module.</td>
 <td><code>bool|None</code></td>
 <td>
 <ul>
-<li><b>bool</b>: <code>True</code> or <code>False</code>;</li>
-<li><b>None</b>: If set to <code>None</code>, it will default to the value initialized by the production line, which is initialized as <code>True</code>.</li>
+<li><b>bool</b>: <code>True</code> or <code>False</code>.</li>
+<li><b>None</b>: If set to <code>None</code>, the default value initialized by the production line will be used, initialized as <code>True</code>.</li>
 </ul>
 </td>
 <td><code>None</code></td>
 </tr>
+<tr>
+<td><code>use_layout_detection</code></td>
+<td>Whether to use the layout detection module.</td>
+<td><code>bool|None</code></td>
+<td>
+<ul>
+<li><b>bool</b>: <code>True</code> or <code>False</code>.</li>
+<li><b>None</b>: If set to <code>None</code>, the default value initialized by the production line will be used, initialized as <code>True</code>.</li>
+</ul>
+</td>
+<td><code>None</code></td>
+</tr>
+
 <td><code>text_det_limit_side_len</code></td>
 <td>Image side length limit for text detection</td>
 <td><code>int|None</code></td>
 <td>
 <ul>
 <li><b>int</b>: Any integer greater than <code>0</code>;</li>
-<li><b>None</b>: If set to <code>None</code>, it will default to the value initialized by the production line, which is initialized as <code>960</code>.</li>
+<li><b>None</b>: If set to <code>None</code>, the default value initialized in production will be used, initialized as <code>960</code>;</li>
 </ul>
 </td>
 <td><code>None</code></td>
+</tr>
 <td><code>text_det_limit_type</code></td>
 <td>Type of image side length limit for text detection</td>
 <td><code>str|None</code></td>
 <td>
 <ul>
-<li><b>str</b>: Supports <code>min</code> and <code>max</code>. <code>min</code> ensures that the shortest side of the image is not less than <code>det_limit_side_len</code>, while <code>max</code> ensures that the longest side of the image is not greater than <code>limit_side_len</code>.</li>
-<li><b>None</b>: If set to <code>None</code>, it will default to the value initialized by the production line, which is initialized as <code>max</code>.</li>
+<li><b>str</b>: Supports <code>min</code> and <code>max</code>. <code>min</code> ensures the shortest side of the image is not less than <code>det_limit_side_len</code>, while <code>max</code> ensures the longest side is not greater than <code>limit_side_len</code>;</li>
+<li><b>None</b>: If set to <code>None</code>, the default value initialized in production will be used, initialized as <code>max</code>;</li>
 </ul>
 </td>
 <td><code>None</code></td>
+</tr>
 <td><code>text_det_thresh</code></td>
-<td>Detection pixel threshold, in the output probability map, pixels with scores greater than this threshold will be considered as text pixels</td>
+<td>Detection pixel threshold; in the output probability map, pixels with scores greater than this threshold will be considered as text pixels</td>
 <td><code>float|None</code></td>
 <td>
 <ul>
-<li><b>float</b>: Any floating-point number greater than <code>0</code>.</li>
-<li><b>None</b>: If set to <code>None</code>, it will default to the value initialized by the production line, which is <code>0.3</code>.</li>
+<li><b>float</b>: Any floating-point number greater than <code>0</code>;</li>
+<li><b>None</b>: If set to <code>None</code>, the default value initialized in production will be used, initialized as <code>0.3</code>;</li>
 </ul>
 </td>
 <td><code>None</code></td>
+</tr>
 <td><code>text_det_box_thresh</code></td>
-<td>Detection box threshold, the average score of all pixels within the detection box must be greater than this threshold for the result to be considered as a text area</td>
+<td>Detection box threshold; the average score of all pixels within the detection box must be greater than this threshold for the result to be considered a text region</td>
 <td><code>float|None</code></td>
 <td>
 <ul>
-<li><b>float</b>: Any floating-point number greater than <code>0</code>.</li>
-<li><b>None</b>: If set to <code>None</code>, it will default to the value initialized by the production line, which is <code>0.6</code>.</li>
+<li><b>float</b>: Any floating-point number greater than <code>0</code>;</li>
+<li><b>None</b>: If set to <code>None</code>, the default value initialized in production will be used, initialized as <code>0.6</code>;</li>
 </ul>
 </td>
 <td><code>None</code></td>
+</tr>
 <td><code>text_det_unclip_ratio</code></td>
-<td>Text detection expansion ratio, this method is used to expand the text area, the larger the value, the larger the expansion area</td>
+<td>Text detection expansion ratio; this value determines the extent of expansion of the text region, with larger values resulting in greater expansion</td>
 <td><code>float|None</code></td>
 <td>
 <ul>
-<li><b>float</b>: Any floating-point number greater than <code>0</code>
-    <li><b>None</b>: If set to <code>None</code>, the default value of this parameter initialized on the production line, <code>2.0</code>, will be used.</li></li></ul></td>
+<li><b>float</b>: Any floating-point number greater than <code>0</code>;</li>
+<li><b>None</b>: If set to <code>None</code>, the default value initialized in production will be used, initialized as <code>2.0</code>;</li>
+</ul>
+</td>
 <td><code>None</code></td>
+</tr>
 <td><code>text_rec_score_thresh</code></td>
 <td>Text recognition threshold; text results with scores greater than this threshold will be retained</td>
 <td><code>float|None</code></td>
 <td>
 <ul>
-<li><b>float</b>: Any floating-point number greater than <code>0</code>
-    <li><b>None</b>: If set to <code>None</code>, the default value of this parameter initialized on the production line, <code>0.0</code>, will be used. That is, no threshold is set.</li></li></ul></td>
-<td><code>None</code></td>
-<tr>
-<td><code>use_layout_detection</code></td>
-<td>Whether to use the layout detection module</td>
-<td><code>bool|None</code></td>
-<td>
-<ul>
-<li><b>bool</b>: <code>True</code> or <code>False</code>;</li>
-<li><b>None</b>: If set to <code>None</code>, the default value of this parameter initialized on the production line will be used, initialized as <code>True</code>;</li>
+<li><b>float</b>: Any floating-point number greater than <code>0</code>;</li>
+<li><b>None</b>: If set to <code>None</code>, the default value initialized in production will be used, initialized as <code>0.0</code>, meaning no threshold is set;</li>
 </ul>
 </td>
 <td><code>None</code></td>
 </tr>
-<tr>
-<td><code>layout_threshold</code></td>
-<td>Layout detection confidence threshold; only results with scores greater than this threshold will be output</td>
-<td><code>float|dict|None</code></td>
-<td>
-<ul>
-<li><b>float</b>: Any floating-point number greater than <code>0</code>
-    <li><b>dict</b>: The key is the int category ID, and the value is any floating-point number greater than <code>0</code>
-    <li><b>None</b>: If set to <code>None</code>, the default value of this parameter initialized on the production line, <code>0.5</code>, will be used.</li></li></li></ul></td>
-<td><code>None</code></td>
-</tr>
-<tr>
-<td><code>layout_nms</code></td>
-<td>Whether to use NMS post-processing after layout detection</td>
-<td><code>bool|None</code></td>
-<td>
-<ul>
-<li><b>bool</b>: <code>True</code> or <code>False</code>;</li>
-<li><b>None</b>: If set to <code>None</code>, the default value of this parameter initialized on the production line will be used, initialized as <code>True</code>;</li>
-</ul>
-</td>
-<td><code>None</code></td>
-</tr>
-<tr>
-<td><code>layout_unclip_ratio</code></td>
-<td>The scaling factor for the side length of the detection box; if not specified, the default PaddleX official model configuration will be used</td>
-<td><code>float|list|None</code></td>
-<td>
-<ul>
-<li><b>float</b>: A floating-point number greater than 0, such as 1.1, indicating that the center of the detection box output by the model remains unchanged, and both the width and height are expanded by 1.1 times</li>
-<li><b>list</b>: For example, [1.2, 1.5], indicating that the center of the detection box output by the model remains unchanged, the width is expanded by 1.2 times, and the height is expanded by 1.5 times</li>
-<li><b>None</b>: If set to <code>None</code>, the default value of this parameter initialized on the production line will be used, initialized as 1.0</li>
-</ul>
-</td>
-<tr>
-<td><code>layout_merge_bboxes_mode</code></td>
-<td>The merging processing mode for the detection boxes output by the model; if not specified, the default PaddleX official model configuration will be used</td>
-<td><code>string|None</code></td>
-<td>
-<ul>
-<li><b>large</b>: When set to large, for overlapping detection boxes in the model output, only the outermost largest box is retained, and overlapping inner boxes are removed.</li>
-<li><b>small</b>: When set to small, for overlapping detection boxes in the model output, only the innermost smallest box is retained, and overlapping outer boxes are removed.</li>
-<li><b>union</b>: No filtering of boxes is performed; both inner and outer boxes are retained</li>
-<li><b>None</b>: If set to <code>None</code>, the default value of this parameter initialized on the production line will be used, initialized as <code>large</code></li>
-</ul>
-</td>
-<td>None</td>
-</tr>
-</tr></table>
+</table>
+
+(3) Process the prediction results, where each sample's prediction result is represented as a corresponding Result object, and supports operations such as printing, saving as an image, saving as an `xlsx` file, saving as an `HTML` file, and saving as a `json` file:
+
 <table>
 <thead>
 <tr>
 <th>Method</th>
-<th>Description</th>
+<th>Method Description</th>
 <th>Parameter</th>
-<th>Type</th>
+<th>Parameter Type</th>
 <th>Parameter Description</th>
 <th>Default Value</th>
 </tr>
@@ -1040,19 +907,19 @@ In the above Python script, the following steps are executed:
 <td rowspan="3">Print the result to the terminal</td>
 <td><code>format_json</code></td>
 <td><code>bool</code></td>
-<td>Whether to format the output content with <code>JSON</code> indentation</td>
+<td>Whether to format the output content using <code>JSON</code> indentation</td>
 <td><code>True</code></td>
 </tr>
 <tr>
 <td><code>indent</code></td>
 <td><code>int</code></td>
-<td>Specify the indentation level to beautify the output <code>JSON</code> data, making it more readable. Only effective when <code>format_json</code> is <code>True</code></td>
+<td>Specify the indentation level to beautify the <code>JSON</code> data, making it more readable. Only effective when <code>format_json</code> is <code>True</code></td>
 <td>4</td>
 </tr>
 <tr>
 <td><code>ensure_ascii</code></td>
 <td><code>bool</code></td>
-<td>Control whether to escape non-<code>ASCII</code> characters to <code>Unicode</code>. If set to <code>True</code>, all non-<code>ASCII</code> characters will be escaped; <code>False</code> will retain the original characters. Only effective when <code>format_json</code> is <code>True</code></td>
+<td>Control whether non-<code>ASCII</code> characters are escaped to <code>Unicode</code>. If set to <code>True</code>, all non-<code>ASCII</code> characters will be escaped; <code>False</code> retains the original characters. Only effective when <code>format_json</code> is <code>True</code></td>
 <td><code>False</code></td>
 </tr>
 <tr>
@@ -1060,19 +927,19 @@ In the above Python script, the following steps are executed:
 <td rowspan="3">Save the result as a JSON file</td>
 <td><code>save_path</code></td>
 <td><code>str</code></td>
-<td>The file path for saving. If it is a directory, the saved file name will be consistent with the input file type</td>
+<td>The file path for saving. If it is a directory, the saved file will have the same name as the input file type</td>
 <td>None</td>
 </tr>
 <tr>
 <td><code>indent</code></td>
 <td><code>int</code></td>
-<td>Specify the indentation level to beautify the output <code>JSON</code> data, making it more readable. Only effective when <code>format_json</code> is <code>True</code></td>
+<td>Specify the indentation level to beautify the <code>JSON</code> data, making it more readable. Only effective when <code>format_json</code> is <code>True</code></td>
 <td>4</td>
 </tr>
 <tr>
 <td><code>ensure_ascii</code></td>
 <td><code>bool</code></td>
-<td>Control whether to escape non-<code>ASCII</code> characters to <code>Unicode</code>. If set to <code>True</code>, all non-<code>ASCII</code> characters will be escaped; <code>False</code> will retain the original characters. Only effective when <code>format_json</code> is <code>True</code></td>
+<td>Control whether non-<code>ASCII</code> characters are escaped to <code>Unicode</code>. If set to <code>True</code>, all non-<code>ASCII</code> characters will be escaped; <code>False</code> retains the original characters. Only effective when <code>format_json</code> is <code>True</code></td>
 <td><code>False</code></td>
 </tr>
 <tr>
@@ -1080,7 +947,7 @@ In the above Python script, the following steps are executed:
 <td>Save the result as an image file</td>
 <td><code>save_path</code></td>
 <td><code>str</code></td>
-<td>The file path for saving, supporting both directory and file path</td>
+<td>The file path for saving, supporting both directory and file paths</td>
 <td>None</td>
 </tr>
 <tr>
@@ -1088,15 +955,15 @@ In the above Python script, the following steps are executed:
 <td>Save the result as an xlsx file</td>
 <td><code>save_path</code></td>
 <td><code>str</code></td>
-<td>The file path for saving, supporting both directory and file path</td>
+<td>The file path for saving, supporting both directory and file paths</td>
 <td>None</td>
 </tr>
 <tr>
 <td><code>save_to_html()</code></td>
-<td>Save the result as an html file</td>
+<td>Save the result as an HTML file</td>
 <td><code>save_path</code></td>
 <td><code>str</code></td>
-<td>The file path for saving, supporting both directory and file path</td>
+<td>The file path for saving, supporting both directory and file paths</td>
 <td>None</td>
 </tr>
 </table>
@@ -1107,7 +974,7 @@ In the above Python script, the following steps are executed:
 
     - `page_index`: `(Union[int, None])` If the input is a PDF file, it indicates which page of the PDF is currently being processed; otherwise, it is `None`.
 
-    - `model_settings`: `(Dict[str, bool])` Configuration parameters for the production line models.
+    - `model_settings`: `(Dict[str, bool])` Configuration parameters for the pipeline models.
 
         - `use_doc_preprocessor`: `(bool)` Controls whether to enable the document preprocessing sub-line.
         - `use_layout_detection`: `(bool)` Controls whether to enable the layout detection sub-line.
@@ -1206,17 +1073,17 @@ for res in output:
 <b>Note:</b> The parameters in the configuration file are the initialization parameters for the production line. If you want to change the initialization parameters for the General Table Recognition Production Line v2, you can directly modify the parameters in the configuration file and load the configuration file for prediction. At the same time, CLI prediction also supports passing in a configuration file, just specify the path of the configuration file with `--pipeline`.
 
 ## 3. Development Integration / Deployment
-If the production line meets your requirements for inference speed and accuracy, you can proceed directly with development integration / deployment.
+If the pipeline meets your requirements for inference speed and accuracy, you can proceed directly with development integration / deployment.
 
-If you need to apply the production line directly in your Python project, you can refer to the example code in [2.2 Python Script Integration](#22-python脚本方式集成).
+If you need to apply the pipeline directly in your Python project, you can refer to the example code in [2.2 Python Script Integration](#22-python脚本方式集成).
 
 In addition, PaddleX also provides three other deployment methods, which are detailed as follows:
 
 🚀 <b>High-Performance Inference</b>: In actual production environments, many applications have strict performance requirements for deployment strategies, especially in terms of response speed, to ensure efficient system operation and smooth user experience. To this end, PaddleX provides a high-performance inference plugin, which aims to deeply optimize the performance of model inference and pre/post-processing to significantly speed up the end-to-end process. For detailed information on high-performance inference, please refer to the [PaddleX High-Performance Inference Guide](../../../pipeline_deploy/high_performance_inference.en.md).
 
-☁️ <b>Service-Oriented Deployment</b>: Service-oriented deployment is a common form of deployment in actual production environments. By encapsulating the inference functionality as a service, clients can access these services through network requests to obtain inference results. PaddleX supports various service-oriented deployment solutions for production lines. For detailed information on service-oriented deployment, please refer to the [PaddleX Service-Oriented Deployment Guide](../../../pipeline_deploy/serving.en.md).
+☁️ <b>Serving Deployment</b>: Serving Deployment is a common form of deployment in actual production environments. By encapsulating the inference functionality as a service, clients can access these services through network requests to obtain inference results. PaddleX supports various serving deployment solutions for pipelines. For detailed information on serving deployment, please refer to the [PaddleX Serving Deployment Guide](../../../pipeline_deploy/serving.en.md).
 
-Below are the API references for basic service-oriented deployment and multi-language service invocation examples:
+Below are the API references for basic serving deployment and multi-language service invocation examples:
 
 <details><summary>API Reference</summary>
 <p>For the main operations provided by the service:</p>
@@ -1319,85 +1186,85 @@ Below are the API references for basic service-oriented deployment and multi-lan
 <tr>
 <td><code>useDocOrientationClassify</code></td>
 <td><code>boolean</code> | <code>null</code></td>
-<td>Refer to the <code>use_doc_orientation_classify</code> parameter description in the production line <code>predict</code> method.</td>
+<td>Refer to the <code>use_doc_orientation_classify</code> parameter description in the pipeline <code>predict</code> method.</td>
 <td>No</td>
 </tr>
 <tr>
 <td><code>useDocUnwarping</code></td>
 <td><code>boolean</code> | <code>null</code></td>
-<td>Refer to the <code>use_doc_unwarping</code> parameter description in the production line <code>predict</code> method.</td>
+<td>Refer to the <code>use_doc_unwarping</code> parameter description in the pipeline <code>predict</code> method.</td>
 <td>No</td>
 </tr>
 <tr>
 <td><code>useLayoutDetection</code></td>
 <td><code>boolean</code> | <code>null</code></td>
-<td>Refer to the <code>use_layout_detection</code> parameter description in the production line <code>predict</code> method.</td>
+<td>Refer to the <code>use_layout_detection</code> parameter description in the pipeline <code>predict</code> method.</td>
 <td>No</td>
 </tr>
 <tr>
 <td><code>useOcrModel</code></td>
 <td><code>boolean</code> | <code>null</code></td>
-<td>Refer to the <code>use_ocr_model</code> parameter description in the production line <code>predict</code> method.</td>
+<td>Refer to the <code>use_ocr_model</code> parameter description in the pipeline <code>predict</code> method.</td>
 <td>No</td>
 </tr>
 <tr>
 <td><code>layoutThreshold</code></td>
 <td><code>number</code> | <code>null</code></td>
-<td>Refer to the <code>layout_threshold</code> parameter description in the production line <code>predict</code> method.</td>
+<td>Refer to the <code>layout_threshold</code> parameter description in the pipeline <code>predict</code> method.</td>
 <td>No</td>
 </tr>
 <tr>
 <td><code>layoutNms</code></td>
 <td><code>boolean</code> | <code>null</code></td>
-<td>Refer to the <code>layout_nms</code> parameter description in the production line <code>predict</code> method.</td>
+<td>Refer to the <code>layout_nms</code> parameter description in the pipeline <code>predict</code> method.</td>
 <td>No</td>
 </tr>
 <tr>
 <td><code>layoutUnclipRatio</code></td>
 <td><code>number</code> | <code>array</code> | <code>null</code></td>
-<td>Refer to the <code>layout_unclip_ratio</code> parameter description in the production line <code>predict</code> method.</td>
+<td>Refer to the <code>layout_unclip_ratio</code> parameter description in the pipeline <code>predict</code> method.</td>
 <td>No</td>
 </tr>
 <tr>
 <td><code>layoutMergeBboxesMode</code></td>
 <td><code>string</code> | <code>null</code></td>
-<td>Refer to the <code>layout_merge_bboxes_mode</code> parameter description in the production line <code>predict</code> method.</td>
+<td>Refer to the <code>layout_merge_bboxes_mode</code> parameter description in the pipeline <code>predict</code> method.</td>
 <td>No</td>
 </tr>
 <tr>
 <td><code>textDetLimitSideLen</code></td>
 <td><code>integer</code> | <code>null</code></td>
-<td>Refer to the <code>text_det_limit_side_len</code> parameter description in the production line <code>predict</code> method.</td>
+<td>Refer to the <code>text_det_limit_side_len</code> parameter description in the pipeline <code>predict</code> method.</td>
 <td>No</td>
 </tr>
 <tr>
 <td><code>textDetLimitType</code></td>
 <td><code>string</code> | <code>null</code></td>
-<td>Refer to the <code>text_det_limit_type</code> parameter description in the production line <code>predict</code> method.</td>
+<td>Refer to the <code>text_det_limit_type</code> parameter description in the pipeline <code>predict</code> method.</td>
 <td>No</td>
 </tr>
 <tr>
 <td><code>textDetThresh</code></td>
 <td><code>number</code> | <code>null</code></td>
-<td>Refer to the <code>text_det_thresh</code> parameter description in the production line <code>predict</code> method.</td>
+<td>Refer to the <code>text_det_thresh</code> parameter description in the pipeline <code>predict</code> method.</td>
 <td>No</td>
 </tr>
 <tr>
 <td><code>textDetBoxThresh</code></td>
 <td><code>number</code> | <code>null</code></td>
-<td>Refer to the <code>text_det_box_thresh</code> parameter description in the production line <code>predict</code> method.</td>
+<td>Refer to the <code>text_det_box_thresh</code> parameter description in the pipeline <code>predict</code> method.</td>
 <td>No</td>
 </tr>
 <tr>
 <td><code>textDetUnclipRatio</code></td>
 <td><code>number</code> | <code>null</code></td>
-<td>Refer to the <code>text_det_unclip_ratio</code> parameter description in the production line <code>predict</code> method.</td>
+<td>Refer to the <code>text_det_unclip_ratio</code> parameter description in the pipeline <code>predict</code> method.</td>
 <td>No</td>
 </tr>
 <tr>
 <td><code>textRecScoreThresh</code></td>
 <td><code>number</code> | <code>null</code></td>
-<td>Refer to the <code>text_rec_score_thresh</code> parameter description in the production line <code>predict</code> method.</td>
+<td>Refer to the <code>text_rec_score_thresh</code> parameter description in the pipeline <code>predict</code> method.</td>
 <td>No</td>
 </tr>
 </tbody>
@@ -1415,12 +1282,12 @@ Below are the API references for basic service-oriented deployment and multi-lan
 <tr>
 <td><code>prunedResult</code></td>
 <td><code>object</code></td>
-<td>A simplified version of the <code>res</code> field in the JSON representation of the result generated by the production line object's <code>predict</code> method, excluding the <code>input_path</code> field.</td>
+<td>A simplified version of the <code>res</code> field in the JSON representation of the result generated by the pipeline object's <code>predict</code> method, excluding the <code>input_path</code> field.</td>
 </tr>
 <tr>
 <td><code>outputImages</code></td>
 <td><code>object</code> | <code>null</code></td>
-<td>Refer to the <code>img</code> property description in the production line prediction results. The images are in JPEG format and are Base64-encoded.</td>
+<td>Refer to the <code>img</code> property description in the pipeline prediction results. The images are in JPEG format and are Base64-encoded.</td>
 </tr>
 <tr>
 <td><code>inputImage</code></td>
@@ -1532,32 +1399,32 @@ SubModules:
   LayoutDetection:
     module_name: layout_detection
     model_name: PicoDet_layout_1x_table
-    model_dir: null 
+    model_dir: null
 
   TableClassification:
     module_name: table_classification
     model_name: PP-LCNet_x1_0_table_cls
-    model_dir: null 
+    model_dir: null
 
   WiredTableStructureRecognition:
     module_name: table_structure_recognition
     model_name: SLANeXt_wired
-    model_dir: null 
+    model_dir: null
 
   WirelessTableStructureRecognition:
     module_name: table_structure_recognition
     model_name: SLANeXt_wireless
-    model_dir: null 
+    model_dir: null
 
   WiredTableCellsDetection:
     module_name: table_cells_detection
     model_name: RT-DETR-L_wired_table_cell_det
-    model_dir: null 
+    model_dir: null
 
   WirelessTableCellsDetection:
     module_name: table_cells_detection
     model_name: RT-DETR-L_wireless_table_cell_det
-    model_dir: null 
+    model_dir: null
 
 SubPipelines:
   DocPreprocessor:
@@ -1568,7 +1435,7 @@ SubPipelines:
       DocOrientationClassify:
         module_name: doc_text_orientation
         model_name: PP-LCNet_x1_0_doc_ori
-        model_dir: null 
+        model_dir: null
 
       DocUnwarping:
         module_name: image_unwarping
@@ -1584,7 +1451,7 @@ SubPipelines:
       TextDetection:
         module_name: text_detection
         model_name: PP-OCRv4_server_det
-        model_dir: null 
+        model_dir: null
         limit_side_len: 960
         limit_type: max
         thresh: 0.3
@@ -1594,25 +1461,29 @@ SubPipelines:
       TextRecognition:
         module_name: text_recognition
         model_name: PP-OCRv4_server_rec
-        model_dir: null 
+        model_dir: null
         batch_size: 1
         score_thresh: 0
 ```
 
-Subsequently, refer to the command-line method or Python script method in [2.2 Local Experience](#22-Local-Experience) to load the modified production line configuration file.
+Subsequently, refer to the command-line method or Python script method in [2.2 Local Experience](#22-Local-Experience) to load the modified pipeline configuration file.
 
 ## 5. Support for Multiple Hardware Devices
 PaddleX supports a variety of mainstream hardware devices including NVIDIA GPU, Kunlunxin XPU, Ascend NPU, and Cambricon MLU. <b>Simply modify the `--device` parameter</b> to seamlessly switch between different hardware devices.
 
-For example, if you use Ascend NPU for OCR production line inference, the CLI command is:
+For example, if you use Ascend NPU for OCR pipeline inference, the CLI command is:
 
 ```bash
 paddlex --pipeline table_recognition_v2 \
+        --use_doc_orientation_classify=False \
+        --use_doc_unwarping=False \
         --input table_recognition.jpg \
         --save_path ./output \
         --device npu:0
 ```
 
-Of course, you can also specify the hardware device when calling `create_pipeline()` or `predict()` in the Python script.
+If you want to use the General Table Recognition v2 Pipeline on a wider variety of hardware, please refer to the [PaddleX Multi-Hardware Usage Guide](../../../other_devices_support/multi_devices_use_guide.en.md).
+
+If you want to use the Universal Table Recognition Pipeline v2 on a wider range of hardware, please refer to the [PaddleX Multi-Device Usage Guide](../../../other_devices_support/multi_devices_use_guide.en.md).
 
 If you want to use the Universal Table Recognition Pipeline v2 on a wider range of hardware, please refer to the [PaddleX Multi-Device Usage Guide](../../../other_devices_support/multi_devices_use_guide.en.md).
