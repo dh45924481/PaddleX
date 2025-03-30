@@ -2,12 +2,12 @@
 comments: true
 ---
 
-# Universal Layout Analysis v2 Pipeline Tutorial
+# PP-StructureV3 Pipeline Tutorial
 
-## 1. Introduction to Universal Layout Analysis v2 pipeline
-Layout analysis is a technology that extracts structured information from document images, primarily used to convert complex document layouts into machine-readable data formats. This technology is widely applied in document management, information extraction, and data digitization. By combining Optical Character Recognition (OCR), image processing, and machine learning algorithms, layout analysis can identify and extract text blocks, headings, paragraphs, images, tables, and other layout elements from documents. The process typically involves three main steps: layout analysis, element analysis, and data formatting, ultimately generating structured document data to improve the efficiency and accuracy of data processing. <b>The Universal Layout Analysis v2 pipeline, based on the v1 pipeline, enhances the capabilities of layout region detection, table recognition, and formula recognition, and adds the ability to restore multi-column reading order and convert results into Markdown files. It performs excellently on various document data and can handle more complex document data.</b> This pipeline also provides flexible serving deployment options, supporting the use of multiple programming languages on various hardware. Moreover, this pipeline offers the capability for custom development; you can train and optimize models on your own dataset based on this pipeline, and the trained models can be seamlessly integrated.
+## 1. Introduction to PP-StructureV3 pipeline
+Layout parsing is a technology that extracts structured information from document images, primarily used to convert complex document layouts into machine-readable data formats. This technology is widely applied in document management, information extraction, and data digitization. By combining Optical Character Recognition (OCR), image processing, and machine learning algorithms, layout parsing can identify and extract text blocks, headings, paragraphs, images, tables, and other layout elements from documents. The process typically involves three main steps: layout detection, element analysis, and data formatting, ultimately generating structured document data to improve the efficiency and accuracy of data processing. <b>The PP-StructureV3 pipeline, based on the v1 pipeline, enhances the capabilities of layout region detection, table recognition, and formula recognition, and adds the ability to restore multi-column reading order and convert results into Markdown files. It performs excellently on various document data and can handle more complex document data.</b> This pipeline also provides flexible serving deployment options, supporting the use of multiple programming languages on various hardware. Moreover, this pipeline offers the capability for custom development; you can train and optimize models on your own dataset based on this pipeline, and the trained models can be seamlessly integrated.
 
-<b>The Universal Layout Analysis v2 pipeline includes a mandatory layout region analysis module and a general OCR sub-pipeline,</b> as well as optional sub-pipelines for document image preprocessing, table recognition, seal recognition, and formula recognition.
+<b>The PP-StructureV3 pipeline includes a mandatory layout region analysis module and a general OCR sub-pipeline,</b> as well as optional sub-pipelines for document image preprocessing, table recognition, seal recognition, and formula recognition.
 
 <b>If you prioritize model accuracy, choose a high-accuracy model; if you prioritize model inference speed, choose a faster inference model; if you prioritize model storage size, choose a smaller storage model.</b>
 <details><summary>👉 Model List Details</summary>
@@ -569,47 +569,78 @@ The ultra-lightweight cyrillic alphabet recognition model trained based on the P
 </tbody>
 </table>
 
-**Test Environment Description**:
+<strong>Test Environment Description:</strong>
 
-- **Performance Test Environment**
-  - **Test Dataset**:
-    - Text Image Rectification Model: [DocUNet](https://www3.cs.stonybrook.edu/~cvl/docunet.html).
-    - Layout Region Detection Model: A self-built layout analysis dataset using PaddleOCR, containing 10,000 images of common document types such as Chinese and English papers, magazines, and research reports.
-    - Table Structure Recognition Model: A self-built English table recognition dataset using PaddleX.
-    - Text Detection Model: A self-built Chinese dataset using PaddleOCR, covering multiple scenarios such as street scenes, web images, documents, and handwriting, with 500 images for detection.
-    - Chinese Recognition Model: A self-built Chinese dataset using PaddleOCR, covering multiple scenarios such as street scenes, web images, documents, and handwriting, with 11,000 images for text recognition.
-    - ch_SVTRv2_rec: Evaluation set A for "OCR End-to-End Recognition Task" in the [PaddleOCR Algorithm Model Challenge](https://aistudio.baidu.com/competition/detail/1131/0/introduction).
-    - ch_RepSVTR_rec: Evaluation set B for "OCR End-to-End Recognition Task" in the [PaddleOCR Algorithm Model Challenge](https://aistudio.baidu.com/competition/detail/1131/0/introduction).
-    - English Recognition Model: A self-built English dataset using PaddleX.
-    - Multilingual Recognition Model: A self-built multilingual dataset using PaddleX.
-    - Text Line Orientation Classification Model: A self-built dataset using PaddleX, covering various scenarios such as ID cards and documents, containing 1000 images.
-    - Seal Text Detection Model: A self-built dataset using PaddleX, containing 500 images of circular seal textures.
-  - **Hardware Configuration**:
-    - GPU: NVIDIA Tesla T4
-    - CPU: Intel Xeon Gold 6271C @ 2.60GHz
-    - Other Environments: Ubuntu 20.04 / cuDNN 8.6 / TensorRT 8.5.2.2
+  <ul>
+      <li><b>Performance Test Environment</b>
+          <ul>
+          <li><strong>Test Dataset：</strong>
+                        <ul>
+                         <li>Document Image Orientation Classification Module: A self-built dataset using PaddleX, covering multiple scenarios such as ID cards and documents, containing 1000 images.</li>
+                          <li>Text Image Rectification Model: <a href="https://www3.cs.stonybrook.edu/~cvl/docunet.html">DocUNet</a></li>
+                          <li>Layout Region Detection Model: A self-built layout detection dataset using PaddleOCR, containing 10,000 images of common document types such as Chinese and English papers, magazines, and research reports.</li>
+                          <li>Table Structure Recognition Model: A self-built English table recognition dataset using PaddleX.</li>
+                          <li>Text Detection Model: A self-built Chinese dataset using PaddleOCR, covering multiple scenarios such as street scenes, web images, documents, and handwriting, with 500 images for detection.</li>
+                          <li>Chinese Recognition Model: A self-built Chinese dataset using PaddleOCR, covering multiple scenarios such as street scenes, web images, documents, and handwriting, with 11,000 images for text recognition.</li>
+                          <li>ch_SVTRv2_rec: Evaluation set A for "OCR End-to-End Recognition Task" in the <a href="https://aistudio.baidu.com/competition/detail/1131/0/introduction">PaddleOCR Algorithm Model Challenge</a></li>
+                          <li>ch_RepSVTR_rec: Evaluation set B for "OCR End-to-End Recognition Task" in the <a href="https://aistudio.baidu.com/competition/detail/1131/0/introduction">PaddleOCR Algorithm Model Challenge</a>.</li>
+                          <li>English Recognition Model: A self-built English dataset using PaddleX.</li>
+                          <li>Multilingual Recognition Model: A self-built multilingual dataset using PaddleX.</li>
+                          <li>Text Line Orientation Classification Model: A self-built dataset using PaddleX, covering various scenarios such as ID cards and documents, containing 1000 images.</li>
+                          <li>Seal Text Detection Model: A self-built dataset using PaddleX, containing 500 images of circular seal textures.</li>
+                        </ul>
+                </li>
+              <li><strong>Hardware Configuration：</strong>
+                  <ul>
+                      <li>GPU: NVIDIA Tesla T4</li>
+                      <li>CPU: Intel Xeon Gold 6271C @ 2.60GHz</li>
+                      <li>Other Environments: Ubuntu 20.04 / cuDNN 8.6 / TensorRT 8.5.2.2</li>
+                  </ul>
+              </li>
+          </ul>
+      </li>
+      <li><b>Inference Mode Description</b></li>
+  </ul>
 
-- **Inference Mode Description**
-
-| Mode        | GPU Configuration                        | CPU Configuration | Acceleration Technology Combination                   |
-|-------------|----------------------------------------|-------------------|---------------------------------------------------|
-| Normal Mode | FP32 Precision / No TRT Acceleration   | FP32 Precision / 8 Threads | PaddleInference                                 |
-| High-Performance Mode | Optimal combination of pre-selected precision types and acceleration strategies | FP32 Precision / 8 Threads | Pre-selected optimal backend (Paddle/OpenVINO/TRT, etc.) |
+<table border="1">
+    <thead>
+        <tr>
+            <th>Mode</th>
+            <th>GPU Configuration </th>
+            <th>CPU Configuration </th>
+            <th>Acceleration Technology Combination</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Normal Mode</td>
+            <td>FP32 Precision / No TRT Acceleration</td>
+            <td>FP32 Precision / 8 Threads</td>
+            <td>PaddleInference</td>
+        </tr>
+        <tr>
+            <td>High-Performance Mode</td>
+            <td>Optimal combination of pre-selected precision types and acceleration strategies</td>
+            <td>FP32 Precision / 8 Threads</td>
+            <td>Pre-selected optimal backend (Paddle/OpenVINO/TRT, etc.)</td>
+        </tr>
+    </tbody>
+</table>
 
 </details>
 
 ## 2. Quick Start
-All the model pipelines provided by PaddleX can be quickly experienced. You can use the command line or Python on your local machine to experience the effect of the General Layout Parsing v2 pipeline.
+All the model pipelines provided by PaddleX can be quickly experienced. You can use the command line or Python on your local machine to experience the effect of the PP-StructureV3 pipeline.
 
-Before using the General Layout Parsing v2 pipeline locally, please ensure that you have completed the installation of the PaddleX wheel package according to the [PaddleX Local Installation Guide](../../../installation/installation.en.md).
+Before using the PP-StructureV3 pipeline locally, please ensure that you have completed the installation of the PaddleX wheel package according to the [PaddleX Local Installation Guide](../../../installation/installation.en.md).
 
 ### 2.1 Experiencing via Command Line
 
-You can quickly experience the layout parsing pipeline with a single command. Use the [test file](https://paddle-model-ecology.bj.bcebos.com/paddlex/imgs/demo_image/layout_parsing_v2_demo.png) and replace `--input` with the local path to perform prediction.
+You can quickly experience the PP-StructureV3 pipeline with a single command. Use the [test file](https://paddle-model-ecology.bj.bcebos.com/paddlex/imgs/demo_image/pp_structure_v3_demo.png) and replace `--input` with the local path to perform prediction.
 
 ```
-paddlex --pipeline layout_parsing_v2 \
-        --input layout_parsing_v2_demo.png \
+paddlex --pipeline PP-StructureV3 \
+        --input pp_structure_v3_demo.png \
         --use_doc_orientation_classify False \
         --use_doc_unwarping False \
         --use_textline_orientation False \
@@ -624,7 +655,7 @@ After running, the result will be printed to the terminal, as follows:
 <details><summary>👉Click to Expand</summary>
 <pre><code>
 
-{'res': {'input_path': 'layout_parsing_v2_demo.png', 'model_settings': {'use_doc_preprocessor': False, 'use_general_ocr': True, 'use_seal_recognition': True, 'use_table_recognition': True, 'use_formula_recognition': True}, 'layout_det_res': {'input_path': None, 'page_index': None, 'boxes': [{'cls_id': 2, 'label': 'text', 'score': 0.9853514432907104, 'coordinate': [770.9531, 776.6814, 1122.6057, 1058.7322]}, {'cls_id': 1, 'label': 'image', 'score': 0.9848673939704895, 'coordinate': [775.7434, 202.27979, 1502.8113, 686.02136]}, {'cls_id': 2, 'label': 'text', 'score': 0.983731746673584, 'coordinate': [1152.3197, 1113.3275, 1503.3029, 1346.586]}, {'cls_id': 2, 'label': 'text', 'score': 0.9832221865653992, 'coordinate': [1152.5602, 801.431, 1503.8436, 986.3563]}, {'cls_id': 2, 'label': 'text', 'score': 0.9829439520835876, 'coordinate': [9.549545, 849.5713, 359.1173, 1058.7488]}, {'cls_id': 2, 'label': 'text', 'score': 0.9811657667160034, 'coordinate': [389.58298, 1137.2659, 740.66235, 1346.7488]}, {'cls_id': 2, 'label': 'text', 'score': 0.9775941371917725, 'coordinate': [9.1302185, 201.85, 359.0409, 339.05692]}, {'cls_id': 2, 'label': 'text', 'score': 0.9750366806983948, 'coordinate': [389.71454, 752.96924, 740.544, 889.92456]}, {'cls_id': 2, 'label': 'text', 'score': 0.9738152027130127, 'coordinate': [389.94565, 298.55988, 740.5585, 435.5124]}, {'cls_id': 2, 'label': 'text', 'score': 0.9737328290939331, 'coordinate': [771.50256, 1065.4697, 1122.2582, 1178.7324]}, {'cls_id': 2, 'label': 'text', 'score': 0.9728517532348633, 'coordinate': [1152.5154, 993.3312, 1503.2349, 1106.327]}, {'cls_id': 2, 'label': 'text', 'score': 0.9725610017776489, 'coordinate': [9.372787, 1185.823, 359.31738, 1298.7227]}, {'cls_id': 2, 'label': 'text', 'score': 0.9724331498146057, 'coordinate': [389.62848, 610.7389, 740.83234, 746.2377]}, {'cls_id': 2, 'label': 'text', 'score': 0.9720287322998047, 'coordinate': [389.29898, 897.0936, 741.41516, 1034.6616]}, {'cls_id': 2, 'label': 'text', 'score': 0.9713053703308105, 'coordinate': [10.323685, 1065.4663, 359.6786, 1178.8872]}, {'cls_id': 2, 'label': 'text', 'score': 0.9689728021621704, 'coordinate': [9.336395, 537.6609, 359.2901, 652.1881]}, {'cls_id': 2, 'label': 'text', 'score': 0.9684857130050659, 'coordinate': [10.7608185, 345.95068, 358.93616, 434.64087]}, {'cls_id': 2, 'label': 'text', 'score': 0.9681928753852844, 'coordinate': [9.674866, 658.89075, 359.56528, 770.4319]}, {'cls_id': 2, 'label': 'text', 'score': 0.9634978175163269, 'coordinate': [770.9464, 1281.1785, 1122.6522, 1346.7156]}, {'cls_id': 2, 'label': 'text', 'score': 0.96304851770401, 'coordinate': [390.0113, 201.28055, 740.1684, 291.53073]}, {'cls_id': 2, 'label': 'text', 'score': 0.962053120136261, 'coordinate': [391.21393, 1040.952, 740.5046, 1130.32]}, {'cls_id': 2, 'label': 'text', 'score': 0.9565253853797913, 'coordinate': [10.113251, 777.1482, 359.439, 842.437]}, {'cls_id': 2, 'label': 'text', 'score': 0.9497362375259399, 'coordinate': [390.31357, 537.86285, 740.47595, 603.9285]}, {'cls_id': 2, 'label': 'text', 'score': 0.9371236562728882, 'coordinate': [10.2034, 1305.9753, 359.5958, 1346.7295]}, {'cls_id': 0, 'label': 'paragraph_title', 'score': 0.9338151216506958, 'coordinate': [791.6062, 1200.8479, 1103.3257, 1259.9324]}, {'cls_id': 0, 'label': 'paragraph_title', 'score': 0.9326773285865784, 'coordinate': [408.0737, 457.37024, 718.9509, 516.63464]}, {'cls_id': 0, 'label': 'paragraph_title', 'score': 0.9274250864982605, 'coordinate': [29.448685, 456.6762, 340.99194, 515.6999]}, {'cls_id': 2, 'label': 'text', 'score': 0.8742568492889404, 'coordinate': [1154.7095, 777.3624, 1330.3086, 794.5853]}, {'cls_id': 2, 'label': 'text', 'score': 0.8442489504814148, 'coordinate': [586.49316, 160.15454, 927.468, 179.64203]}, {'cls_id': 11, 'label': 'doc_title', 'score': 0.8332607746124268, 'coordinate': [133.80017, 37.41908, 1380.8601, 124.1429]}, {'cls_id': 6, 'label': 'figure_title', 'score': 0.6770150661468506, 'coordinate': [812.1718, 705.1199, 1484.6973, 747.1692]}]}, 'overall_ocr_res': {'input_path': None, 'page_index': None, 'model_settings': {'use_doc_preprocessor': False, 'use_textline_orientation': False}, 'dt_polys': array([[[ 133,   35],
+{'res': {'input_path': 'pp_structure_v3_demo.png', 'model_settings': {'use_doc_preprocessor': False, 'use_general_ocr': True, 'use_seal_recognition': True, 'use_table_recognition': True, 'use_formula_recognition': True}, 'layout_det_res': {'input_path': None, 'page_index': None, 'boxes': [{'cls_id': 2, 'label': 'text', 'score': 0.9853514432907104, 'coordinate': [770.9531, 776.6814, 1122.6057, 1058.7322]}, {'cls_id': 1, 'label': 'image', 'score': 0.9848673939704895, 'coordinate': [775.7434, 202.27979, 1502.8113, 686.02136]}, {'cls_id': 2, 'label': 'text', 'score': 0.983731746673584, 'coordinate': [1152.3197, 1113.3275, 1503.3029, 1346.586]}, {'cls_id': 2, 'label': 'text', 'score': 0.9832221865653992, 'coordinate': [1152.5602, 801.431, 1503.8436, 986.3563]}, {'cls_id': 2, 'label': 'text', 'score': 0.9829439520835876, 'coordinate': [9.549545, 849.5713, 359.1173, 1058.7488]}, {'cls_id': 2, 'label': 'text', 'score': 0.9811657667160034, 'coordinate': [389.58298, 1137.2659, 740.66235, 1346.7488]}, {'cls_id': 2, 'label': 'text', 'score': 0.9775941371917725, 'coordinate': [9.1302185, 201.85, 359.0409, 339.05692]}, {'cls_id': 2, 'label': 'text', 'score': 0.9750366806983948, 'coordinate': [389.71454, 752.96924, 740.544, 889.92456]}, {'cls_id': 2, 'label': 'text', 'score': 0.9738152027130127, 'coordinate': [389.94565, 298.55988, 740.5585, 435.5124]}, {'cls_id': 2, 'label': 'text', 'score': 0.9737328290939331, 'coordinate': [771.50256, 1065.4697, 1122.2582, 1178.7324]}, {'cls_id': 2, 'label': 'text', 'score': 0.9728517532348633, 'coordinate': [1152.5154, 993.3312, 1503.2349, 1106.327]}, {'cls_id': 2, 'label': 'text', 'score': 0.9725610017776489, 'coordinate': [9.372787, 1185.823, 359.31738, 1298.7227]}, {'cls_id': 2, 'label': 'text', 'score': 0.9724331498146057, 'coordinate': [389.62848, 610.7389, 740.83234, 746.2377]}, {'cls_id': 2, 'label': 'text', 'score': 0.9720287322998047, 'coordinate': [389.29898, 897.0936, 741.41516, 1034.6616]}, {'cls_id': 2, 'label': 'text', 'score': 0.9713053703308105, 'coordinate': [10.323685, 1065.4663, 359.6786, 1178.8872]}, {'cls_id': 2, 'label': 'text', 'score': 0.9689728021621704, 'coordinate': [9.336395, 537.6609, 359.2901, 652.1881]}, {'cls_id': 2, 'label': 'text', 'score': 0.9684857130050659, 'coordinate': [10.7608185, 345.95068, 358.93616, 434.64087]}, {'cls_id': 2, 'label': 'text', 'score': 0.9681928753852844, 'coordinate': [9.674866, 658.89075, 359.56528, 770.4319]}, {'cls_id': 2, 'label': 'text', 'score': 0.9634978175163269, 'coordinate': [770.9464, 1281.1785, 1122.6522, 1346.7156]}, {'cls_id': 2, 'label': 'text', 'score': 0.96304851770401, 'coordinate': [390.0113, 201.28055, 740.1684, 291.53073]}, {'cls_id': 2, 'label': 'text', 'score': 0.962053120136261, 'coordinate': [391.21393, 1040.952, 740.5046, 1130.32]}, {'cls_id': 2, 'label': 'text', 'score': 0.9565253853797913, 'coordinate': [10.113251, 777.1482, 359.439, 842.437]}, {'cls_id': 2, 'label': 'text', 'score': 0.9497362375259399, 'coordinate': [390.31357, 537.86285, 740.47595, 603.9285]}, {'cls_id': 2, 'label': 'text', 'score': 0.9371236562728882, 'coordinate': [10.2034, 1305.9753, 359.5958, 1346.7295]}, {'cls_id': 0, 'label': 'paragraph_title', 'score': 0.9338151216506958, 'coordinate': [791.6062, 1200.8479, 1103.3257, 1259.9324]}, {'cls_id': 0, 'label': 'paragraph_title', 'score': 0.9326773285865784, 'coordinate': [408.0737, 457.37024, 718.9509, 516.63464]}, {'cls_id': 0, 'label': 'paragraph_title', 'score': 0.9274250864982605, 'coordinate': [29.448685, 456.6762, 340.99194, 515.6999]}, {'cls_id': 2, 'label': 'text', 'score': 0.8742568492889404, 'coordinate': [1154.7095, 777.3624, 1330.3086, 794.5853]}, {'cls_id': 2, 'label': 'text', 'score': 0.8442489504814148, 'coordinate': [586.49316, 160.15454, 927.468, 179.64203]}, {'cls_id': 11, 'label': 'doc_title', 'score': 0.8332607746124268, 'coordinate': [133.80017, 37.41908, 1380.8601, 124.1429]}, {'cls_id': 6, 'label': 'figure_title', 'score': 0.6770150661468506, 'coordinate': [812.1718, 705.1199, 1484.6973, 747.1692]}]}, 'overall_ocr_res': {'input_path': None, 'page_index': None, 'model_settings': {'use_doc_preprocessor': False, 'use_textline_orientation': False}, 'dt_polys': array([[[ 133,   35],
         ...,
         [ 133,  131]],
 
@@ -661,15 +692,15 @@ The result parameter description can be found in the result interpretation in [2
 <b>Note:</b> Since the default model of the pipeline is relatively large, the inference speed may be slow. You can refer to the model list in Section 1 and replace it with a model that has faster inference speed.
 
 ### 2.2 Python Script Integration
-Just a few lines of code can complete the quick inference of the pipeline. Taking the General Layout Analysis v2 pipeline as an example:
+Just a few lines of code can complete the quick inference of the pipeline. Taking the PP-StructureV3 pipeline as an example:
 
 ```python
 from paddlex import create_pipeline
 
-pipeline = create_pipeline(pipeline="layout_parsing_v2")
+pipeline = create_pipeline(pipeline="PP-StructureV3")
 
 output = pipeline.predict(
-    input="./layout_parsing_v2_demo.png",
+    input="./pp_structure_v3_demo.png",
     use_doc_orientation_classify=False,
     use_doc_unwarping=False,
     use_textline_orientation=False,
@@ -685,7 +716,7 @@ If it is a PDF file, each page of the PDF will be processed separately, and each
 from pathlib import Path
 from paddlex import create_pipeline
 
-pipeline = create_pipeline(pipeline="layout_parsing_v2")
+pipeline = create_pipeline(pipeline="PP-StructureV3")
 
 input_file = "./your_pdf_file.pdf"
 output_path = Path("./output")
@@ -700,8 +731,9 @@ markdown_texts = ""
 markdown_images = []
 
 for res in output:
-    markdown_texts += res.markdown["markdown_texts"]
-    markdown_images.append(res.markdown["markdown_images"])
+    md_info = res.markdown
+    markdown_list.append(md_info)
+    markdown_images.append(md_info.get("markdown_images", {}))
 
 mkd_file_path = output_path / f"{Path(input_file).stem}.md"
 mkd_file_path.parent.mkdir(parents=True, exist_ok=True)
@@ -715,6 +747,14 @@ for item in markdown_images:
             file_path.parent.mkdir(parents=True, exist_ok=True)
             image.save(file_path)
 ```
+
+**Note:**
+
+- The default text recognition model used by PP-StructureV3 is the **Chinese-English recognition model**. Limited recognition capability for purely English text. For fully English scenarios, you can modify the `model_name` under the `TextRecognition` configuration item in the [PP-StructureV3 configuration file](https://github.com/PaddlePaddle/PaddleX/blob/release/3.0-rc/paddlex/configs/pipelines/PP-StructureV3.yaml) to `en_PP-OCRv4_mobile_rec` or other English recognition models for better recognition results. For other language scenarios, you can also refer to the model list mentioned earlier and choose the corresponding language recognition model for replacement.
+
+- In the example code, the parameters `use_doc_orientation_classify`, `use_doc_unwarping`, and `use_textline_orientation` are all set to False by default. These parameters respectively control the document orientation classification, document unwarping, and text line orientation classification functions. If you need to use these features, you can manually set them to True.
+
+- PP-StructureV3 provides flexible parameter configuration, allowing you to adjust parameters for layout detection, text detection, text recognition, etc., based on the characteristics of the document for better results. For more detailed configurations, please refer to the [PP-StructureV3 configuration file](https://github.com/PaddlePaddle/PaddleX/blob/release/3.0-rc/paddlex/configs/pipelines/PP-StructureV3.yaml).
 
 In the above Python script, the following steps are executed:
 
@@ -911,11 +951,12 @@ In the above Python script, the following steps are executed:
 <tr>
 <td><code>layout_unclip_ratio</code></td>
 <td>Expansion ratio of the detection box for the layout area detection model</td>
-<td><code>float|Tuple[float,float]|None</code></td>
+<td><code>float|Tuple[float,float]|dict|None</code></td>
 <td>
 <ul>
 <li><b>float</b>: Any floating-point number greater than <code>0</code>;</li>
 <li><b>Tuple[float,float]</b>: The expansion ratios in the horizontal and vertical directions, respectively;</li>
+<li><b>dict</b>, keys as <b>int</b> representing <code>cls_id</code>, values as float scaling factors, e.g., <code>{0: (1.1, 2.0)}</code> means cls_id 0 expanding the width by 1.1 times and the height by 2.0 times while keeping the center unchanged;</li>
 <li><b>None</b>: If set to <code>None</code>, the default value initialized for this parameter in the pipeline will be used, initialized as <code>1.0</code>;</li>
 </ul>
 </td>
@@ -924,10 +965,11 @@ In the above Python script, the following steps are executed:
 <tr>
 <td><code>layout_merge_bboxes_mode</code></td>
 <td>Overlap box filtering method for layout area detection</td>
-<td><code>str|None</code></td>
+<td><code>str|dict|None</code></td>
 <td>
 <ul>
 <li><b>str</b>: <code>large</code>, <code>small</code>, <code>union</code>, representing whether to retain the larger box, the smaller box, or both during overlap box filtering;</li>
+<li><b>dict</b>, keys as <b>int</b> representing <code>cls_id</code> and values as merging modes, e.g., <code>{0: "large", 2: "small"};</li>
 <li><b>None</b>: If set to <code>None</code>, the default value initialized for this parameter in the pipeline will be used, initialized as <code>large</code>;</li>
 </ul>
 </td>
@@ -1288,19 +1330,19 @@ In addition, it also supports obtaining visualized images with results and predi
 - The prediction result returned by the `img` attribute is data of the dictionary type. The keys are `layout_det_res`, `overall_ocr_res`, `text_paragraphs_ocr_res`, `formula_res_region1`, `table_cell_img`, and `seal_res_region1`, and the corresponding values are `Image.Image` objects: used to display the visualized images of layout detection, OCR, OCR text paragraphs, formulas, tables, and seal results. If the optional module is not used, the dictionary only contains `layout_det_res`.
 - - The `markdown` property returns the prediction result as a dictionary. The keys are `markdown_texts` and `markdown_images`, corresponding to markdown text and images for display in Markdown (`Image.Image` objects).
 
-In addition, you can obtain the layout parsing pipeline configuration file and load the configuration file for prediction. You can execute the following command to save the result in `my_path`:
+In addition, you can obtain the PP-StructureV3 pipeline configuration file and load the configuration file for prediction. You can execute the following command to save the result in `my_path`:
 
 ```
-paddlex --get_pipeline_config layout_parsing_v2 --save_path ./my_path
+paddlex --get_pipeline_config PP-StructureV3 --save_path ./my_path
 ```
 
-If you have obtained the configuration file, you can customize the layout parsing pipeline configuration. You just need to modify the `pipeline` parameter value in the `create_pipeline` method to the path of the pipeline configuration file. The example is as follows:
+If you have obtained the configuration file, you can customize the PP-StructureV3 pipeline configuration. You just need to modify the `pipeline` parameter value in the `create_pipeline` method to the path of the pipeline configuration file. The example is as follows:
 
 ```python
 from paddlex import create_pipeline
-pipeline = create_pipeline(pipeline="./my_path/layout_parsing_v2.yaml")
+pipeline = create_pipeline(pipeline="./my_path/PP-StructureV3.yaml")
 output = pipeline.predict(
-    input="./layout_parsing_v2_demo.png",,
+    input="./pp_structure_v3_demo.png",,
     use_doc_orientation_classify=False,
     use_doc_unwarping=False,
     use_textline_orientation=False,
@@ -1312,7 +1354,7 @@ for res in output:
     res.save_to_markdown(save_path="output") ## Save the result of the current image in Markdown format
 ```
 
-<b>Note:</b> The parameters in the configuration file are the pipeline initialization parameters. If you wish to change the initialization parameters of the General Layout Parsing v2 pipeline, you can directly modify the parameters in the configuration file and load the configuration file for prediction. Additionally, CLI prediction also supports passing in a configuration file, simply specify the path of the configuration file with `--pipeline`.
+<b>Note:</b> The parameters in the configuration file are the pipeline initialization parameters. If you wish to change the initialization parameters of the PP-StructureV3 pipeline, you can directly modify the parameters in the configuration file and load the configuration file for prediction. Additionally, CLI prediction also supports passing in a configuration file, simply specify the path of the configuration file with `--pipeline`.
 
 ## 3. Development Integration/Deployment
 If the pipeline meets your requirements for inference speed and accuracy, you can proceed directly with development integration/deployment.
@@ -1468,6 +1510,30 @@ Below is the API reference for basic serving deployment and examples of service 
 <td>No</td>
 </tr>
 <tr>
+<td><code>layoutThreshold</code></td>
+<td><code>number</code> | <code>null</code></td>
+<td>Please refer to the description of the <code>layout_threshold</code> parameter of the pipeline object's <code>predict</code> method.</td>
+<td>No</td>
+</tr>
+<tr>
+<td><code>layoutNms</code></td>
+<td><code>boolean</code> | <code>null</code></td>
+<td>Please refer to the description of the <code>layout_nms</code> parameter of the pipeline object's <code>predict</code> method.</td>
+<td>No</td>
+</tr>
+<tr>
+<td><code>layoutUnclipRatio</code></td>
+<td><code>number</code> | <code>array</code> | <code>object</code> | <code>null</code></td>
+<td>Please refer to the description of the <code>layout_unclip_ratio</code> parameter of the pipeline object's <code>predict</code> method.</td>
+<td>No</td>
+</tr>
+<tr>
+<td><code>layoutMergeBboxesMode</code></td>
+<td><code>string</code> | <code>object</code> | <code>null</code></td>
+<td>Please refer to the description of the <code>layout_merge_bboxes_mode</code> parameter of the pipeline object's <code>predict</code> method.</td>
+<td>No</td>
+</tr>
+<tr>
 <td><code>textDetLimitSideLen</code></td>
 <td><code>integer</code> | <code>null</code></td>
 <td>Please refer to the description of the <code>text_det_limit_side_len</code> parameter of the pipeline object's <code>predict</code> method.</td>
@@ -1540,27 +1606,21 @@ Below is the API reference for basic serving deployment and examples of service 
 <td>No</td>
 </tr>
 <tr>
-<td><code>layoutThreshold</code></td>
-<td><code>number</code> | <code>null</code></td>
-<td>Please refer to the description of the <code>layout_threshold</code> parameter of the pipeline object's <code>predict</code> method.</td>
+<td><code>useTableCellsOcrResults</code></td>
+<td><code>boolean</code></td>
+<td>Please refer to the description of the <code>use_table_cells_ocr_results</code> parameter of the pipeline object's <code>predict</code> method.</td>
 <td>No</td>
 </tr>
 <tr>
-<td><code>layoutNms</code></td>
-<td><code>boolean</code> | <code>null</code></td>
-<td>Please refer to the description of the <code>layout_nms</code> parameter of the pipeline object's <code>predict</code> method.</td>
+<td><code>useE2eWiredTableRecModel</code></td>
+<td><code>boolean</code></td>
+<td>Please refer to the description of the <code>use_e2e_wired_table_rec_model</code> parameter of the pipeline object's <code>predict</code> method.</td>
 <td>No</td>
 </tr>
 <tr>
-<td><code>layoutUnclipRatio</code></td>
-<td><code>number</code> | <code>array</code> | <code>null</code></td>
-<td>Please refer to the description of the <code>layout_unclip_ratio</code> parameter of the pipeline object's <code>predict</code> method.</td>
-<td>No</td>
-</tr>
-<tr>
-<td><code>layoutMergeBboxesMode</code></td>
-<td><code>string</code> | <code>null</code></td>
-<td>Please refer to the description of the <code>layout_merge_bboxes_mode</code> parameter of the pipeline object's <code>predict</code> method.</td>
+<td><code>useE2eWirelessTableRecModel</code></td>
+<td><code>boolean</code></td>
+<td>Please refer to the description of the <code>use_e2e_wireless_table_rec_model</code> parameter of the pipeline object's <code>predict</code> method.</td>
 <td>No</td>
 </tr>
 </tbody>
@@ -1707,12 +1767,12 @@ for i, res in enumerate(result["layoutParsingResults"]):
 You can choose the appropriate deployment method based on your needs to integrate the model into your pipeline and proceed with subsequent AI application integration.
 
 ## 4. Custom Development
-If the default model weights provided by the General Layout Parsing v2 pipeline do not meet your requirements in terms of accuracy or speed, you can try to <b>fine-tune</b> the existing model using <b>your own domain-specific or application-specific data</b> to improve the recognition performance of the General Layout Parsing v2 pipeline in your scenario.
+If the default model weights provided by the PP-StructureV3 pipeline do not meet your requirements in terms of accuracy or speed, you can try to <b>fine-tune</b> the existing model using <b>your own domain-specific or application-specific data</b> to improve the recognition performance of the PP-StructureV3 pipeline in your scenario.
 
 ### 4.1 Model Fine-Tuning
-Since the General Layout Parsing v2 pipeline consists of 7 modules, the unsatisfactory performance of the pipeline may originate from any one of these modules.
+Since the PP-StructureV3 pipeline consists of 7 modules, the unsatisfactory performance of the pipeline may originate from any one of these modules.
 
-Since the General Layout Parsing v2 pipeline includes several modules, the unsatisfactory performance of the pipeline may originate from any one of these modules. You can analyze the cases with poor extraction results, identify which module is problematic through visualizing the images, and refer to the corresponding fine-tuning tutorial links in the table below to fine-tune the model.
+Since the PP-StructureV3 pipeline includes several modules, the unsatisfactory performance of the pipeline may originate from any one of these modules. You can analyze the cases with poor extraction results, identify which module is problematic through visualizing the images, and refer to the corresponding fine-tuning tutorial links in the table below to fine-tune the model.
 
 <table>
 <thead>
@@ -1726,42 +1786,42 @@ Since the General Layout Parsing v2 pipeline includes several modules, the unsat
 <tr>
 <td>Inaccurate layout region detection, such as missed detection of seals, tables, etc.</td>
 <td>Layout Region Detection Module</td>
-<td><a href="../../../module_usage/tutorials/ocr_modules/layout_detection.en.md">Link</a></td>
+<td><a href="https://paddlepaddle.github.io/PaddleX/latest/en/module_usage/tutorials/ocr_modules/layout_detection.html">Link</a></td>
 </tr>
 <tr>
 <td>Inaccurate table structure recognition</td>
 <td>Table Structure Recognition Module</td>
-<td><a href="../../../module_usage/tutorials/ocr_modules/table_structure_recognition.en.md">Link</a></td>
+<td><a href="https://paddlepaddle.github.io/PaddleX/latest/en/module_usage/tutorials/ocr_modules/table_structure_recognition.html">Link</a></td>
 </tr>
 <tr>
 <td>Inaccurate formula recognition</td>
 <td>Formula Recognition Module</td>
-<td><a href="../../../module_usage/tutorials/ocr_modules/formula_recognition.en.md">Link</a></td>
+<td><a href="https://paddlepaddle.github.io/PaddleX/latest/en/module_usage/tutorials/ocr_modules/formula_recognition.html">Link</a></td>
 </tr>
 <tr>
 <td>Missed detection of seal text</td>
 <td>Seal Text Detection Module</td>
-<td><a href="../../../module_usage/tutorials/ocr_modules/seal_text_detection.en.md">Link</a></td>
+<td><a href="https://paddlepaddle.github.io/PaddleX/latest/en/module_usage/tutorials/ocr_modules/seal_text_detection.html">Link</a></td>
 </tr>
 <tr>
 <td>Missed detection of text</td>
 <td>Text Detection Module</td>
-<td><a href="../../../module_usage/tutorials/ocr_modules/text_detection.en.md">Link</a></td>
+<td><a href="https://paddlepaddle.github.io/PaddleX/latest/en/module_usage/tutorials/ocr_modules/text_detection.html">Link</a></td>
 </tr>
 <tr>
 <td>Inaccurate text content</td>
 <td>Text Recognition Module</td>
-<td><a href="../../../module_usage/tutorials/ocr_modules/text_recognition.en.md">Link</a></td>
+<td><a href="https://paddlepaddle.github.io/PaddleX/latest/en/module_usage/tutorials/ocr_modules/text_recognition.html">Link</a></td>
 </tr>
 <tr>
 <td>Inaccurate correction of vertical or rotated text lines</td>
 <td>Text Line Orientation Classification Module</td>
-<td><a href="../../../module_usage/tutorials/ocr_modules/textline_orientation_classification.en.md">Link</a></td>
+<td><a href="https://paddlepaddle.github.io/PaddleX/latest/en/module_usage/tutorials/ocr_modules/textline_orientation_classification.html">Link</a></td>
 </tr>
 <tr>
 <td>Inaccurate correction of whole-image rotation</td>
 <td>Document Image Orientation Classification Module</td>
-<td><a href="../../../module_usage/tutorials/ocr_modules/doc_img_orientation_classification.en.md">Link</a></td>
+<td><a href="https://paddlepaddle.github.io/PaddleX/latest/en/module_usage/tutorials/ocr_modules/doc_img_orientation_classification.html">Link</a></td>
 </tr>
 <tr>
 <td>Inaccurate correction of image distortion</td>
@@ -1815,11 +1875,11 @@ Subsequently, refer to the command-line method or Python script method in the lo
 ## 5. Multi-Hardware Support
 PaddleX supports a variety of mainstream hardware devices such as NVIDIA GPU, Kunlunxin XPU, Ascend NPU, and Cambricon MLU. <b>Simply modify the `--device` parameter</b> to seamlessly switch between different hardware devices.
 
-For example, if you use Ascend NPU for layout analysis pipeline inference, the CLI command you use is:
+For example, if you use Ascend NPU for PP-StructureV3 pipeline inference, the CLI command you use is:
 
 ```bash
-paddlex --pipeline layout_parsing_v2 \
-        --input layout_parsing_v2_demo.png  \
+paddlex --pipeline PP-StructureV3 \
+        --input pp_structure_v3_demo.png  \
         --use_doc_orientation_classify False \
         --use_doc_unwarping False \
         --use_textline_orientation False \
@@ -1829,4 +1889,4 @@ paddlex --pipeline layout_parsing_v2 \
 
 Of course, you can also specify the hardware device when calling `create_pipeline()` or `predict()` in your Python script.
 
-If you want to use the Universal Layout Parsing v2 pipeline on a wider range of hardware, please refer to the [PaddleX Multi-Device Usage Guide](../../../other_devices_support/multi_devices_use_guide.en.md).
+If you want to use the PP-StructureV3 pipeline on a wider range of hardware, please refer to the [PaddleX Multi-Device Usage Guide](../../../other_devices_support/multi_devices_use_guide.en.md).

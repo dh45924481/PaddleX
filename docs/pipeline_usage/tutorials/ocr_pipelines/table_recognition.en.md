@@ -7,7 +7,7 @@ comments: true
 ## 1. Introduction to General Table Recognition Pipeline
 Table recognition is a technology that automatically identifies and extracts table content and structure from documents or images. It is widely used in data entry, information retrieval, and document analysis. By using computer vision and machine learning algorithms, table recognition can convert complex table information into editable formats, facilitating further processing and analysis of data.
 
-The General Table Recognition Pipeline is designed to solve table recognition tasks by identifying tables in images and outputting them in HTML format. This pipeline integrates the well-known SLANet and SLANet_plus table recognition models. Based on this pipeline, precise predictions of tables can be achieved, covering a wide range of applications in general, manufacturing, finance, transportation, and other fields. The pipeline also provides flexible service deployment options, supporting various hardware and programming languages for integration. Moreover, it offers custom development capabilities, allowing you to train and optimize models on your own dataset, which can then be seamlessly integrated.
+The General Table Recognition Pipeline is designed to solve table recognition tasks by identifying tables in images and outputting them in HTML format. This pipeline integrates the well-known SLANet and SLANet_plus table structure recognition models. Based on this pipeline, precise predictions of tables can be achieved, covering a wide range of applications in general, manufacturing, finance, transportation, and other fields. The pipeline also provides flexible service deployment options, supporting various hardware and programming languages for integration. Moreover, it offers custom development capabilities, allowing you to train and optimize models on your own dataset, which can then be seamlessly integrated.
 
 <img src="https://raw.githubusercontent.com/cuicheng01/PaddleX_doc_images/main/images/pipelines/table_recognition/01.png"/>
 <b>The General Table Recognition Pipeline includes essential modules for table structure recognition, text detection, and text recognition, as well as optional modules for layout area detection, document image orientation classification, and text image correction.</b>
@@ -16,7 +16,7 @@ The General Table Recognition Pipeline is designed to solve table recognition ta
 
 <details><summary>👉Model List Details</summary>
 
-<p><b>Table Recognition Module Models:</b></p>
+<p><b>Table Structure Recognition Module Models:</b></p>
 <table>
 <tr>
 <th>Model</th><th>Model Download Link</th>
@@ -565,31 +565,61 @@ The ultra-lightweight cyrillic alphabet recognition model trained based on the P
 </table>
 </details>
 
-**Test Environment Description:**
+<strong>Test Environment Description:</strong>
 
-- **Performance Test Environment**
-  - **Test Dataset**
-    - Document Image Orientation Classification Model: A dataset built by PaddleX, covering multiple scenarios such as certificates and documents, containing 1,000 images.
-    - Text Image Rectification Model: <a href="https://www3.cs.stonybrook.edu/~cvl/docunet.html">DocUNet</a>.
-    - Layout Region Detection Model: A layout region analysis dataset built by PaddleOCR, containing 10,000 images of common document types such as Chinese and English papers, magazines, and research reports.
-    - Table Structure Recognition Model: An internal English table recognition dataset built by PaddleX.
-    - Text Detection Model: A Chinese dataset built by PaddleOCR, covering multiple scenarios such as street scenes, web images, documents, and handwriting, with 500 images for detection.
-    - Chinese Recognition Model: A Chinese dataset built by PaddleOCR, covering multiple scenarios such as street scenes, web images, documents, and handwriting, with 11,000 images for text recognition.
-    - ch_SVTRv2_rec: <a href="https://aistudio.baidu.com/competition/detail/1131/0/introduction">PaddleOCR Algorithm Model Challenge - Task 1: OCR End-to-End Recognition Task</a> A-list evaluation set.
-    - ch_RepSVTR_rec: <a href="https://aistudio.baidu.com/competition/detail/1131/0/introduction">PaddleOCR Algorithm Model Challenge - Task 1: OCR End-to-End Recognition Task</a> B-list evaluation set.
-    - English Recognition Model: An English dataset built by PaddleX.
-    - Multilingual Recognition Model: A multilingual dataset built by PaddleX.
-  - **Hardware Configuration**:
-    - GPU: NVIDIA Tesla T4
-    - CPU: Intel Xeon Gold 6271C @ 2.60GHz
-    - Other Environment: Ubuntu 20.04 / cuDNN 8.6 / TensorRT 8.5.2.2
+  <ul>
+      <li><b>Performance Test Environment</b>
+          <ul>
+            <li><strong>Test Dataset：</strong>
+                        <ul>
+                         <li>Document Image Orientation Classification Module: A self-built dataset using PaddleX, covering multiple scenarios such as ID cards and documents, containing 1000 images.</li>
+                         <li>Text Image Rectification Model: <a href="https://www3.cs.stonybrook.edu/~cvl/docunet.html">DocUNet</a>.</li>
+                         <li>Layout Region Detection Model: A layout region analysis dataset built by PaddleOCR, containing 10,000 images of common document types such as Chinese and English papers, magazines, and research reports.</li>
+                         <li>Table Structure Recognition Model: An internal English table recognition dataset built by PaddleX.</li>
+                         <li>Text Detection Model: A Chinese dataset built by PaddleOCR, covering multiple scenarios such as street scenes, web images, documents, and handwriting, with 500 images for detection.</li>
+                         <li>Chinese Recognition Model: A Chinese dataset built by PaddleOCR, covering multiple scenarios such as street scenes, web images, documents, and handwriting, with 11,000 images for text recognition.</li>
+                         <li>ch_SVTRv2_rec: <a href="https://aistudio.baidu.com/competition/detail/1131/0/introduction">PaddleOCR Algorithm Model Challenge - Task 1: OCR End-to-End Recognition Task</a> A-list evaluation set.</li>
+                         <li>ch_RepSVTR_rec: <a href="https://aistudio.baidu.com/competition/detail/1131/0/introduction">PaddleOCR Algorithm Model Challenge - Task 1: OCR End-to-End Recognition Task</a> B-list evaluation set.</li>
+                         <li>English Recognition Model: An English dataset built by PaddleX.</li>
+                         <li>Multilingual Recognition Model: A multilingual dataset built by PaddleX.</li>
+                        </ul>
+                </li>
+              <li><strong>Hardware Configuration：</strong>
+                  <ul>
+                      <li>GPU: NVIDIA Tesla T4</li>
+                      <li>CPU: Intel Xeon Gold 6271C @ 2.60GHz</li>
+                      <li>Other Environments: Ubuntu 20.04 / cuDNN 8.6 / TensorRT 8.5.2.2</li>
+                  </ul>
+              </li>
+          </ul>
+      </li>
+      <li><b>Inference Mode Description</b></li>
+  </ul>
 
-- **Inference Mode Description**
-
-| Mode        | GPU Configuration                        | CPU Configuration | Acceleration Technology Combination                   |
-|-------------|----------------------------------------|-------------------|---------------------------------------------------|
-| Normal Mode | FP32 Precision / No TRT Acceleration   | FP32 Precision / 8 Threads | PaddleInference                                 |
-| High-Performance Mode | Optimal combination of pre-selected precision types and acceleration strategies | FP32 Precision / 8 Threads | Pre-selected optimal backend (Paddle/OpenVINO/TRT, etc.) |
+<table border="1">
+    <thead>
+        <tr>
+            <th>Mode</th>
+            <th>GPU Configuration </th>
+            <th>CPU Configuration </th>
+            <th>Acceleration Technology Combination</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Normal Mode</td>
+            <td>FP32 Precision / No TRT Acceleration</td>
+            <td>FP32 Precision / 8 Threads</td>
+            <td>PaddleInference</td>
+        </tr>
+        <tr>
+            <td>High-Performance Mode</td>
+            <td>Optimal combination of pre-selected precision types and acceleration strategies</td>
+            <td>FP32 Precision / 8 Threads</td>
+            <td>Pre-selected optimal backend (Paddle/OpenVINO/TRT, etc.)</td>
+        </tr>
+    </tbody>
+</table>
 
 </details>
 
@@ -868,6 +898,13 @@ In the above Python script, the following steps are executed:
 </td>
 <td><code>None</code></td>
 </tr>
+<td><code>use_table_cells_ocr_results</code></td>
+<td>Whether to enable Table-Cells-OCR mode, when not enabled, use global OCR result to fill to HTML table, when enabled, do OCR cell by cell and fill to HTML table (it will increase the time consuming). Both of them perform differently in different scenarios, please choose according to the actual situation.</td>
+<td><code>bool</code></td>
+<td>
+<ul>
+<li><b>bool</b>：<code>True</code> or <code>False</code>
+<td><code>False</code></td>
 </table>
 
 (3) Process the prediction results. Each sample's prediction result is represented as a corresponding Result object, and supports operations such as printing, saving as an image, saving as an `xlsx` file, saving as an `HTML` file, and saving as a `json` file.
@@ -1242,6 +1279,12 @@ Below are the API references for basic serving deployment and multi-language ser
 <td>Please refer to the description of the <code>text_rec_score_thresh</code> parameter of the pipeline object's <code>predict</code> method.</td>
 <td>No</td>
 </tr>
+<tr>
+<td><code>useTableCellsOcrResults</code></td>
+<td><code>boolean</code></td>
+<td>Please refer to the description of the <code>use_table_cells_ocr_results</code> parameter of the pipeline object's <code>predict</code> method.</td>
+<td>No</td>
+</tr>
 </tbody>
 </table>
 
@@ -1350,27 +1393,27 @@ Since the general table recognition pipeline consists of several modules, if the
 <tr>
 <td>Table structure recognition error or cell positioning error</td>
 <td>Table Structure Recognition Module</td>
-<td><a href="../../../module_usage/tutorials/ocr_modules/table_structure_recognition.en.md">Link</a></td>
+<td><a href="https://paddlepaddle.github.io/PaddleX/latest/en/module_usage/tutorials/ocr_modules/table_structure_recognition.html">Link</a></td>
 </tr>
 <tr>
 <td>Failed to detect the table area</td>
 <td>Layout Area Detection Module</td>
-<td><a href="../../../module_usage/tutorials/ocr_modules/layout_detection.en.md">Link</a></td>
+<td><a href="https://paddlepaddle.github.io/PaddleX/latest/en/module_usage/tutorials/ocr_modules/layout_detection.html">Link</a></td>
 </tr>
 <tr>
 <td>Text detection omission</td>
 <td>Text Detection Module</td>
-<td><a href="../../../module_usage/tutorials/ocr_modules/text_detection.en.md">Link</a></td>
+<td><a href="https://paddlepaddle.github.io/PaddleX/latest/en/module_usage/tutorials/ocr_modules/text_detection.html">Link</a></td>
 </tr>
 <tr>
 <td>Text content is inaccurate</td>
 <td>Text Recognition Module</td>
-<td><a href="../../../module_usage/tutorials/ocr_modules/text_recognition.en.md">Link</a></td>
+<td><a href="https://paddlepaddle.github.io/PaddleX/latest/en/module_usage/tutorials/ocr_modules/text_recognition.html">Link</a></td>
 </tr>
 <tr>
 <td>Whole image rotation correction is inaccurate</td>
 <td>Document Image Orientation Classification Module</td>
-<td><a href="../../../module_usage/tutorials/ocr_modules/doc_img_orientation_classification.en.md">Link</a></td>
+<td><a href="https://paddlepaddle.github.io/PaddleX/latest/en/module_usage/tutorials/ocr_modules/doc_img_orientation_classification.html">Link</a></td>
 </tr>
 <tr>
 <td>Image distortion correction is inaccurate</td>
@@ -1390,12 +1433,12 @@ SubModules:
   LayoutDetection:
     module_name: layout_detection
     model_name: PicoDet_layout_1x_table
-    model_dir: null # 替换为微调后的版面区域检测模型权重路径
+    model_dir: null # Replace with fine-tuned model weight paths
 
   TableStructureRecognition:
     module_name: table_structure_recognition
     model_name: SLANet_plus
-    model_dir: null # 替换为微调后的表格结构识别模型权重路径
+    model_dir: null # Replace with fine-tuned model weight paths
 
 SubPipelines:
   DocPreprocessor:
@@ -1406,7 +1449,7 @@ SubPipelines:
       DocOrientationClassify:
         module_name: doc_text_orientation
         model_name: PP-LCNet_x1_0_doc_ori
-        model_dir: null # 替换为微调后的文档图像方向分类模型权重路径
+        model_dir: null # Replace with fine-tuned model weight paths
 
       DocUnwarping:
         module_name: image_unwarping
@@ -1422,16 +1465,16 @@ SubPipelines:
       TextDetection:
         module_name: text_detection
         model_name: PP-OCRv4_server_det
-        model_dir: null # 替换为微调后的文本检测模型权重路径
+        model_dir: null # Replace with fine-tuned model weight paths
         limit_side_len: 960
         limit_type: max
         thresh: 0.3
-        box_thresh: 0.6
+        box_thresh: 0.4
         unclip_ratio: 2.0
       TextRecognition:
         module_name: text_recognition
         model_name: PP-OCRv4_server_rec
-        model_dir: null # 替换为微调后文本识别的模型权重路径
+        model_dir: null # Replace with fine-tuned model weight paths
         batch_size: 1
         score_thresh: 0
 ```

@@ -60,21 +60,48 @@ Time series anomaly detection is a technique for identifying abnormal patterns o
 </tbody>
 </table>
 
-**Test Environment Description**:
+<strong>Test Environment Description:</strong>
 
-- **Performance Test Environment**
-  - **Test Dataset**: <a href="https://paddle-model-ecology.bj.bcebos.com/paddlex/data/ts_anomaly_examples.tar">PSM</a> dataset.
-  - **Hardware Configuration**:
-    - GPU: NVIDIA Tesla T4
-    - CPU: Intel Xeon Gold 6271C @ 2.60GHz
-    - Other Environments: Ubuntu 20.04 / cuDNN 8.6 / TensorRT 8.5.2.2
+  <ul>
+      <li><b>Performance Test Environment</b>
+          <ul>
+             <li><strong>Test Dataset：</strong><a href="https://paddle-model-ecology.bj.bcebos.com/paddlex/data/ts_anomaly_examples.tar">PSM</a> dataset.</li>
+              <li><strong>Hardware Configuration：</strong>
+                  <ul>
+                      <li>GPU: NVIDIA Tesla T4</li>
+                      <li>CPU: Intel Xeon Gold 6271C @ 2.60GHz</li>
+                      <li>Other Environments: Ubuntu 20.04 / cuDNN 8.6 / TensorRT 8.5.2.2</li>
+                  </ul>
+              </li>
+          </ul>
+      </li>
+      <li><b>Inference Mode Description</b></li>
+  </ul>
 
-- **Inference Mode Description**
-
-| Mode        | GPU Configuration                        | CPU Configuration | Acceleration Technology Combination                   |
-|-------------|----------------------------------------|-------------------|---------------------------------------------------|
-| Normal Mode | FP32 Precision / No TRT Acceleration   | FP32 Precision / 8 Threads | PaddleInference                                 |
-| High-Performance Mode | Optimal combination of pre-selected precision types and acceleration strategies | FP32 Precision / 8 Threads | Pre-selected optimal backend (Paddle/OpenVINO/TRT, etc.) |
+<table border="1">
+    <thead>
+        <tr>
+            <th>Mode</th>
+            <th>GPU Configuration </th>
+            <th>CPU Configuration </th>
+            <th>Acceleration Technology Combination</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Normal Mode</td>
+            <td>FP32 Precision / No TRT Acceleration</td>
+            <td>FP32 Precision / 8 Threads</td>
+            <td>PaddleInference</td>
+        </tr>
+        <tr>
+            <td>High-Performance Mode</td>
+            <td>Optimal combination of pre-selected precision types and acceleration strategies</td>
+            <td>FP32 Precision / 8 Threads</td>
+            <td>Pre-selected optimal backend (Paddle/OpenVINO/TRT, etc.)</td>
+        </tr>
+    </tbody>
+</table>
 
 ## 2. Quick Start
 The pre-trained model pipelines provided by PaddleX allow for quick experience of their effects. You can experience the effects of the General Time Series Anomaly Detection Pipeline online or locally using command line or Python.
@@ -386,6 +413,11 @@ Below are the API references for basic service-based deployment and examples of 
 </thead>
 <tbody>
 <tr>
+<td><code>image</code></td>
+<td><code>string</code> | <code>null</code></td>
+<td>The image of time series anomaly detection result. The image is in JPEG format and encoded in Base64.</td>
+</tr>
+<tr>
 <td><code>csv</code></td>
 <td><code>string</code></td>
 <td>The result of time-series anomaly detection in CSV format. Encoded in UTF-8+Base64.</td>
@@ -394,7 +426,8 @@ Below are the API references for basic service-based deployment and examples of 
 </table>
 <p>An example of <code>result</code> is as follows:</p>
 <pre><code class="language-json">{
-&quot;csv&quot;: &quot;xxxxxx&quot;
+"csv": "xxxxxx",
+"image": "xxxxxx"
 }
 </code></pre></details>
 
@@ -408,6 +441,7 @@ import requests
 
 API_URL = "http://localhost:8080/time-series-anomaly-detection"  # Service URL
 csv_path = "./test.csv"
+output_image_path = "./out.jpg"
 output_csv_path = "./out.csv"
 
 # Encode the local CSV file using Base64
@@ -423,6 +457,9 @@ response = requests.post(API_URL, json=payload)
 # Process the response data
 assert response.status_code == 200
 result = response.json()["result"]
+with open(output_image_path, "wb") as f:
+    f.write(base64.b64decode(result["image"]))
+print(f"Output image saved at  {output_image_path}")
 with open(output_csv_path, "wb") as f:
     f.write(base64.b64decode(result["csv"]))
 print(f"Output time-series data saved at {output_csv_path}")
@@ -438,6 +475,7 @@ print(f"Output time-series data saved at {output_csv_path}")
 int main() {
     httplib::Client client("localhost:8080");
     const std::string csvPath = "./test.csv";
+    const std::string outputImagePath = "./out.jpg";
     const std::string outputCsvPath = "./out.csv";
 
     httplib::Headers headers = {
@@ -469,8 +507,20 @@ int main() {
         auto result = jsonResponse["result"];
 
         // Save the data
+        std::string encodedImage = result["image"];
+        std::string decodedString = base64::from_base64(encodedImage);
+        std::vector<unsigned char> decodedImage(decodedString.begin(), decodedString.end());
+        std::ofstream outputImage(outputImagePath, std::ios::binary | std::ios::out);
+        if (outputImage.is_open()) {
+            outputImage.write(reinterpret_cast<char*>(decodedImage.data()), decodedImage.size());
+            outputImage.close();
+            std::cout << "Output image data saved at " << outputImagePath << std::endl;
+        } else {
+            std::cerr << "Unable to open file for writing: " << outputImagePath << std::endl;
+        }
+
         encodedCsv = result["csv"];
-        std::string decodedString = base64::from_base64(encodedCsv);
+        decodedString = base64::from_base64(encodedCsv);
         std::vector<unsigned char> decodedCsv(decodedString.begin(), decodedString.end());
         std::ofstream outputCsv(outputCsvPath, std::ios::binary | std::ios::out);
         if (outputCsv.is_open()) {
@@ -483,68 +533,6 @@ int main() {
     } else {
         std::cout << "Failed to send HTTP request." << std::endl;
         std::cout << response->body << std::endl;
-        return 1;
-    }
-
-    return 0;
-}
-</code></pre></details>
-
-<details><summary>C++</summary>
-
-<pre><code class="language-cpp">#include &lt;iostream&gt;
-#include &quot;cpp-httplib/httplib.h&quot; // <url id="cu9m7enftaebd5d06u9g" type="url" status="parsed" title="GitHub - Huiyicc/cpp-httplib: A C++ header-only HTTP/HTTPS server and client library" wc="15064">https://github.com/Huiyicc/cpp-httplib</url>
-#include &quot;nlohmann/json.hpp&quot; // <url id="cu9m7enftaebd5d06ua0" type="url" status="parsed" title="GitHub - nlohmann/json: JSON for Modern C++" wc="80311">https://github.com/nlohmann/json</url>
-#include &quot;base64.hpp&quot; // <url id="cu9m7enftaebd5d06uag" type="url" status="parsed" title="GitHub - tobiaslocker/base64: A modern C++ base64 encoder / decoder" wc="2293">https://github.com/tobiaslocker/base64</url>
-
-int main() {
-    httplib::Client client(&quot;localhost:8080&quot;);
-    const std::string csvPath = &quot;./test.csv&quot;;
-    const std::string outputCsvPath = &quot;./out.csv&quot;;
-
-    httplib::Headers headers = {
-        {&quot;Content-Type&quot;, &quot;application/json&quot;}
-    };
-
-    // Perform Base64 encoding
-    std::ifstream file(csvPath, std::ios::binary | std::ios::ate);
-    std::streamsize size = file.tellg();
-    file.seekg(0, std::ios::beg);
-
-    std::vector&lt;char&gt; buffer(size);
-    if (!file.read(buffer.data(), size)) {
-        std::cerr &lt;&lt; &quot;Error reading file.&quot; &lt;&lt; std::endl;
-        return 1;
-    }
-    std::string bufferStr(reinterpret_cast&lt;const char*&gt;(buffer.data()), buffer.size());
-    std::string encodedCsv = base64::to_base64(bufferStr);
-
-    nlohmann::json jsonObj;
-    jsonObj[&quot;csv&quot;] = encodedCsv;
-    std::string body = jsonObj.dump();
-
-    // Call the API
-    auto response = client.Post(&quot;/time-series-anomaly-detection&quot;, headers, body, &quot;application/json&quot;);
-    // Process the response data
-    if (response &amp;&amp; response-&gt;status == 200) {
-        nlohmann::json jsonResponse = nlohmann::json::parse(response-&gt;body);
-        auto result = jsonResponse[&quot;result&quot;];
-
-        // Save the data
-        encodedCsv = result[&quot;csv&quot;];
-        std::string decodedString = base64::from_base64(encodedCsv);
-        std::vector&lt;unsigned char&gt; decodedCsv(decodedString.begin(), decodedString.end());
-        std::ofstream outputCsv(outputCsvPath, std::ios::binary | std::ios::out);
-        if (outputCsv.is_open()) {
-            outputCsv.write(reinterpret_cast&lt;char*&gt;(decodedCsv.data()), decodedCsv.size());
-            outputCsv.close();
-            std::cout &lt;&lt; &quot;Output time-series data saved at &quot; &lt;&lt; outputCsvPath &lt;&lt; std::endl;
-        } else {
-            std::cerr &lt;&lt; &quot;Unable to open file for writing: &quot; &lt;&lt; outputCsvPath &lt;&lt; std::endl;
-        }
-    } else {
-        std::cout &lt;&lt; &quot;Failed to send HTTP request.&quot; &lt;&lt; std::endl;
-        std::cout &lt;&lt; response-&gt;body &lt;&lt; std::endl;
         return 1;
     }
 
@@ -566,9 +554,10 @@ import java.util.Base64;
 
 public class Main {
     public static void main(String[] args) throws IOException {
-        String API_URL = &quot;http://localhost:8080/time-series-anomaly-detection&quot;;
-        String csvPath = &quot;./test.csv&quot;;
-        String outputCsvPath = &quot;./out.csv&quot;;
+        String API_URL = "http://localhost:8080/time-series-anomaly-detection";
+        String csvPath = "./test.csv";
+        String outputImagePath = "./out.jpg";
+        String outputCsvPath = "./out.csv";
 
         // Base64 encode the local CSV file
         File file = new File(csvPath);
@@ -577,11 +566,11 @@ public class Main {
 
         ObjectMapper objectMapper = new ObjectMapper();
         ObjectNode params = objectMapper.createObjectNode();
-        params.put(&quot;csv&quot;, csvData);
+        params.put("csv", csvData);
 
         // Create an instance of OkHttpClient
         OkHttpClient client = new OkHttpClient();
-        MediaType JSON = MediaType.Companion.get(&quot;application/json; charset=utf-8&quot;);
+        MediaType JSON = MediaType.Companion.get("application/json; charset=utf-8");
         RequestBody body = RequestBody.Companion.create(params.toString(), JSON);
         Request request = new Request.Builder()
                 .url(API_URL)
@@ -593,17 +582,24 @@ public class Main {
             if (response.isSuccessful()) {
                 String responseBody = response.body().string();
                 JsonNode resultNode = objectMapper.readTree(responseBody);
-                JsonNode result = resultNode.get(&quot;result&quot;);
+                JsonNode result = resultNode.get("result");
 
                 // Save the returned data
-                String base64Csv = result.get(&quot;csv&quot;).asText();
+                String base64Image = result.get("image").asText();
+                byte[] imageBytes = Base64.getDecoder().decode(base64Image);
+                try (FileOutputStream fos = new FileOutputStream(outputImagePath)) {
+                    fos.write(imageBytes);
+                }
+                System.out.println("Output image data saved at " + outputImagePath);
+
+                String base64Csv = result.get("csv").asText();
                 byte[] csvBytes = Base64.getDecoder().decode(base64Csv);
                 try (FileOutputStream fos = new FileOutputStream(outputCsvPath)) {
                     fos.write(csvBytes);
                 }
-                System.out.println(&quot;Output time-series data saved at &quot; + outputCsvPath);
+                System.out.println("Output time-series data saved at " + outputCsvPath);
             } else {
-                System.err.println(&quot;Request failed with code: &quot; + response.code());
+                System.err.println("Request failed with code: " + response.code());
             }
         }
     }
@@ -615,45 +611,46 @@ public class Main {
 <pre><code class="language-go">package main
 
 import (
-    &quot;bytes&quot;
-    &quot;encoding/base64&quot;
-    &quot;encoding/json&quot;
-    &quot;fmt&quot;
-    &quot;io/ioutil&quot;
-    &quot;net/http&quot;
+    "bytes"
+    "encoding/base64"
+    "encoding/json"
+    "fmt"
+    "io/ioutil"
+    "net/http"
 )
 
 func main() {
-    API_URL := &quot;http://localhost:8080/time-series-anomaly-detection&quot;
-    csvPath := &quot;./test.csv&quot;;
-    outputCsvPath := &quot;./out.csv&quot;;
+    API_URL := "http://localhost:8080/time-series-anomaly-detection"
+    csvPath := "./test.csv";
+    outputImagePath := "./out.jpg";
+    outputCsvPath := "./out.csv";
 
     // Read the CSV file and encode it with Base64
     csvBytes, err := ioutil.ReadFile(csvPath)
     if err != nil {
-        fmt.Println(&quot;Error reading CSV file:&quot;, err)
+        fmt.Println("Error reading CSV file:", err)
         return
     }
     csvData := base64.StdEncoding.EncodeToString(csvBytes)
 
-    payload := map[string]string{&quot;csv&quot;: csvData} // Base64-encoded file content
+    payload := map[string]string{"csv": csvData} // Base64-encoded file content
     payloadBytes, err := json.Marshal(payload)
     if err != nil {
-        fmt.Println(&quot;Error marshaling payload:&quot;, err)
+        fmt.Println("Error marshaling payload:", err)
         return
     }
 
     // Call the API
     client := &amp;http.Client{}
-    req, err := http.NewRequest(&quot;POST&quot;, API_URL, bytes.NewBuffer(payloadBytes))
+    req, err := http.NewRequest("POST", API_URL, bytes.NewBuffer(payloadBytes))
     if err != nil {
-        fmt.Println(&quot;Error creating request:&quot;, err)
+        fmt.Println("Error creating request:", err)
         return
     }
 
     res, err := client.Do(req)
     if err != nil {
-        fmt.Println(&quot;Error sending request:&quot;, err)
+        fmt.Println("Error sending request:", err)
         return
     }
     defer res.Body.Close()
@@ -661,33 +658,47 @@ func main() {
     // Process the response data
     body, err := ioutil.ReadAll(res.Body)
     if err != nil {
-        fmt.Println(&quot;Error reading response body:&quot;, err)
+        fmt.Println("Error reading response body:", err)
         return
     }
     type Response struct {
         Result struct {
-            Csv string `json:&quot;csv&quot;`
-        } `json:&quot;result&quot;`
+            Csv string `json:"csv"`
+            Image string `json:"image"`
+        } `json:"result"`
     }
     var respData Response
     err = json.Unmarshal([]byte(string(body)), &amp;respData)
     if err != nil {
-        fmt.Println(&quot;Error unmarshaling response body:&quot;, err)
+        fmt.Println("Error unmarshaling response body:", err)
         return
     }
+
+    // Decode the Base64-encoded image data and save it as a file
+    outputImageData, err := base64.StdEncoding.DecodeString(respData.Result.Image)
+    if err != nil {
+        fmt.Println("Error decoding Base64 image data:", err)
+        return
+    }
+    err = ioutil.WriteFile(outputImagePath, outputImageData, 0644)
+    if err != nil {
+        fmt.Println("Error writing image to file:", err)
+        return
+    }
+    fmt.Printf("Output image data saved at %s.jpg", outputImagePath)
 
     // Decode the Base64-encoded CSV data and save it as a file
     outputCsvData, err := base64.StdEncoding.DecodeString(respData.Result.Csv)
     if err != nil {
-        fmt.Println(&quot;Error decoding Base64 CSV data:&quot;, err)
+        fmt.Println("Error decoding Base64 CSV data:", err)
         return
     }
     err = ioutil.WriteFile(outputCsvPath, outputCsvData, 0644)
     if err != nil {
-        fmt.Println(&quot;Error writing CSV to file:&quot;, err)
+        fmt.Println("Error writing CSV to file:", err)
         return
     }
-    fmt.Printf(&quot;Output time-series data saved at %s.csv&quot;, outputCsvPath)
+    fmt.Printf("Output time-series data saved at %s.csv", outputCsvPath)
 }
 </code></pre></details>
 
@@ -705,6 +716,7 @@ class Program
 {
     static readonly string API_URL = "http://localhost:8080/time-series-anomaly-detection";
     static readonly string csvPath = "./test.csv";
+    static readonly string outputImagePath = "./out.jpg";
     static readonly string outputCsvPath = "./out.csv";
 
     static async Task Main(string[] args)
@@ -726,6 +738,12 @@ class Program
         string responseBody = await response.Content.ReadAsStringAsync();
         JObject jsonResponse = JObject.Parse(responseBody);
 
+        // Save the image file
+        string base64Image = jsonResponse["result"]["image"].ToString();
+        byte[] outputImageBytes = Convert.FromBase64String(base64Image);
+        File.WriteAllBytes(outputImagePath, outputImageBytes);
+        Console.WriteLine($"Output image data saved at {outputImagePath}");
+
         // Save the CSV file
         string base64Csv = jsonResponse["result"]["csv"].ToString();
         byte[] outputCsvBytes = Convert.FromBase64String(base64Csv);
@@ -741,8 +759,9 @@ class Program
 const fs = require('fs');
 
 const API_URL = 'http://localhost:8080/time-series-anomaly-detection';
-const csvPath = &quot;./test.csv&quot;;
-const outputCsvPath = &quot;./out.csv&quot;;
+const csvPath = "./test.csv";
+const outputImagePath = "./out.jpg";
+const outputCsvPath = "./out.csv";
 
 let config = {
    method: 'POST',
@@ -761,10 +780,17 @@ function encodeFileToBase64(filePath) {
 
 axios.request(config)
 .then((response) =&gt; {
-    const result = response.data[&quot;result&quot;];
+    const result = response.data["result"];
+
+    // Save the image file
+    const imageBuffer = Buffer.from(result["image"], 'base64');
+    fs.writeFile(outputImagePath, imageBuffer, (err) =&gt; {
+      if (err) throw err;
+      console.log(`Output image data saved at ${outputImagePath}`);
+    });
 
     // Save the csv file
-    const csvBuffer = Buffer.from(result[&quot;csv&quot;], 'base64');
+    const csvBuffer = Buffer.from(result["csv"], 'base64');
     fs.writeFile(outputCsvPath, csvBuffer, (err) =&gt; {
       if (err) throw err;
       console.log(`Output time-series data saved at ${outputCsvPath}`);
@@ -779,13 +805,14 @@ axios.request(config)
 
 <pre><code class="language-php">&lt;?php
 
-$API_URL = &quot;http://localhost:8080/time-series-anomaly-detection&quot;; // Service URL
-$csv_path = &quot;./test.csv&quot;;
-$output_csv_path = &quot;./out.csv&quot;;
+$API_URL = "http://localhost:8080/time-series-anomaly-detection"; // Service URL
+$csv_path = "./test.csv";
+$output_image_path = "./out.jpg";
+$output_csv_path = "./out.csv";
 
 // Base64 encode the local CSV file
 $csv_data = base64_encode(file_get_contents($csv_path));
-$payload = array(&quot;csv&quot; =&gt; $csv_data); // Base64 encoded file content
+$payload = array("csv" =&gt; $csv_data); // Base64 encoded file content
 
 // Call the API
 $ch = curl_init($API_URL);
@@ -797,10 +824,13 @@ $response = curl_exec($ch);
 curl_close($ch);
 
 // Handle the response data
-$result = json_decode($response, true)[&quot;result&quot;];
+$result = json_decode($response, true)["result"];
 
-file_put_contents($output_csv_path, base64_decode($result[&quot;csv&quot;]));
-echo &quot;Output time-series data saved at &quot; . $output_csv_path . &quot;\n&quot;;
+file_put_contents($output_image_path, base64_decode($result["image"]));
+echo "Output image data saved at " . $output_image_path . "\n";
+
+file_put_contents($output_csv_path, base64_decode($result["csv"]));
+echo "Output time-series data saved at " . $output_csv_path . "\n";
 
 ?&gt;
 </code></pre></details>
@@ -814,7 +844,7 @@ You can choose the appropriate method to deploy the model pipeline according to 
 If the default model weights provided by the general time-series anomaly detection pipeline do not meet your accuracy or speed requirements in your scenario, you can try to further <b>fine-tune</b> the existing model using <b>your own specific domain or application scenario data</b> to improve the recognition effect of the general time-series anomaly detection pipeline in your scenario.
 
 ### 4.1 Model Fine-Tuning
-Since the general time-series anomaly detection pipeline includes a time-series anomaly detection module, if the effect of the model pipeline is not as expected, you need to refer to the [Custom Development](../../../module_usage/tutorials/time_series_modules/time_series_anomaly_detection.en.md#四二次开发) section in the [Time-Series Prediction Module Development Tutorial](../../../module_usage/tutorials/time_series_modules/time_series_anomaly_detection.en.md) to fine-tune the time-series anomaly detection model using your private dataset.
+Since the general time-series anomaly detection pipeline includes a time-series anomaly detection module, if the effect of the model pipeline is not as expected, you need to refer to the <b>Custom Development</b> section in the [Time Series Anomaly Detection Module Tutorial](https://paddlepaddle.github.io/PaddleX/latest/en/module_usage/tutorials/time_series_modules/time_series_anomaly_detection.html) to fine-tune the time-series anomaly detection model using your private dataset.
 
 ### 4.2 Model Application
 After you complete the fine-tuning training with your private dataset, you can obtain the local model weight file.

@@ -7,11 +7,9 @@ comments: true
 ## 1. 通用表格识别v2产线介绍
 表格识别是一种自动从文档或图像中识别和提取表格内容及其结构的技术，广泛应用于数据录入、信息检索和文档分析等领域。通过使用计算机视觉和机器学习算法，表格识别能够将复杂的表格信息转换为可编辑的格式，方便用户进一步处理和分析数据。
 
-通用表格识别v2产线（PP-TableMagic）用于解决表格识别任务，对图片中的表格进行识别，并以HTML格式输出。与通用表格识别产线不同，本产线新引入了表格分类和表格单元格检测两个模块，通过采用“表格分类+表格结构识别+单元格检测”多模型串联组网方案，实现了相比通用表格识别产线更好的端到端表格识别性能。除此之外，通用表格识别v2产线原生支持针对性地模型微调，各类开发者均能对通用表格识别v2产线进行不同程度的自定义微调，使其在不同应用场景下都能得到令人满意的性能。
+通用表格识别v2产线（PP-TableMagic）用于解决表格识别任务，对图片中的表格进行识别，并以HTML格式输出。与通用表格识别产线不同，本产线新引入了表格分类和表格单元格检测两个模块，通过<b>采用“表格分类+表格结构识别+单元格检测”多模型串联组网方案</b>，实现了相比通用表格识别产线更好的端到端表格识别性能。基于此，通用表格识别v2产线<b>原生支持针对性地模型微调</b>，各类开发者均能对通用表格识别v2产线进行不同程度的自定义微调，使其在不同应用场景下都能得到令人满意的性能。<b>除此之外，通用表格识别v2产线同样支持使用端到端表格结构识别模型（例如 SLANet、SLANet_plus 等），并且支持有线表、无线表独立配置表格识别方式，开发者可以自由选取和组合最佳的表格识别方案。</b>
 
 本产线的使用场景覆盖通用、制造、金融、交通等各个领域。本产线同时提供了灵活的服务化部署方式，支持在多种硬件上使用多种编程语言调用。不仅如此，本产线也提供了二次开发的能力，您可以基于本产线在您自己的数据集上训练调优，训练后的模型也可以无缝集成。
-
-<b>❗ 通用表格识别v2产线仍在持续优化中，将在 PaddleX 下一版本发布最终版。为保持使用的稳定性，您可以先使用通用表格识别产线进行表格处理，v2最终版开源后我们将发布通知，敬请期待！</b>
 
 <img src="https://raw.githubusercontent.com/cuicheng01/PaddleX_doc_images/main/images/pipelines/table_recognition_v2/01.png"/>
 
@@ -19,7 +17,7 @@ comments: true
 
 <b>如果您更注重模型的精度，请选择精度较高的模型；如果您更在意模型的推理速度，请选择推理速度较快的模型；如果您关注模型的存储大小，请选择存储体积较小的模型。</b>
 <details><summary> 👉模型列表详情</summary>
-<p><b>表格识别模块模型：</b></p>
+<p><b>表格结构识别模块模型：</b></p>
 <table>
 <tr>
 <th>模型</th><th>模型下载链接</th>
@@ -96,7 +94,7 @@ comments: true
 <th>检测Hmean（%）</th>
 <th>GPU推理耗时（ms）<br/>[常规模式 / 高性能模式]</th>
 <th>CPU推理耗时（ms）<br/>[常规模式 / 高性能模式]</th>
-<th>模型存储大小（M)</th>
+<th>模型存储大小（M）</th>
 <th>介绍</th>
 </tr>
 </thead>
@@ -561,7 +559,7 @@ devanagari_PP-OCRv3_mobile_rec_infer.tar">推理模型</a>/<a href="https://padd
 <tr>
 <th>模型</th><th>模型下载链接</th>
 <th>MS-SSIM （%）</th>
-<th>模型存储大小（M)</th>
+<th>模型存储大小（M）</th>
 <th>介绍</th>
 </tr>
 </thead>
@@ -583,7 +581,7 @@ devanagari_PP-OCRv3_mobile_rec_infer.tar">推理模型</a>/<a href="https://padd
 <th>Top-1 Acc（%）</th>
 <th>GPU推理耗时（ms）<br/>[常规模式 / 高性能模式]</th>
 <th>CPU推理耗时（ms）<br/>[常规模式 / 高性能模式]</th>
-<th>模型存储大小（M)</th>
+<th>模型存储大小（M）</th>
 <th>介绍</th>
 </tr>
 </thead>
@@ -599,36 +597,67 @@ devanagari_PP-OCRv3_mobile_rec_infer.tar">推理模型</a>/<a href="https://padd
 </tbody>
 </table>
 
-**测试环境说明：**
+<strong>测试环境说明:</strong>
 
-- **性能测试环境**
-  - **测试数据集**
-    - 文档图像方向分类模型：PaddleX 自建的数据集，覆盖证件和文档等多个场景，包含 1000 张图片。
-    - 版面区域检测模型：PaddleOCR 自建的版面区域检测数据集，包含中英文论文、杂志、合同、书本、试卷和研报等常见的 500 张文档类型图片。
-    - 表格版面检测模型：PaddleOCR 自建的版面表格区域检测数据集，包含中英文 7835 张带有表格的论文文档类型图片。
-    - 3类版面检测模型：PaddleOCR 自建的版面区域检测数据集，包含中英文论文、杂志和研报等常见的 1154 张文档类型图片。
-    - 5类英文文档区域检测模型：[PubLayNet](https://developer.ibm.com/exchanges/data/all/publaynet) 的评估数据集，包含英文>文档的 11245 张文图片。
-    - 17类区域检测模型：PaddleOCR 自建的版面区域检测数据集，包含中英文论文、杂志和研报等常见的 892 张文档类型图片。
-    - 表格结构识别模型：PaddleX 内部自建高难度中文表格识别数据集。
-    - 表格单元格检测模型：PaddleX 内部自建评测集。
-    - 表格分类模型：PaddleX 内部自建评测集。
-    - 文本检测模型：PaddleOCR 自建的中文数据集，覆盖街景、网图、文档、手写多个场景，其中检测包含 500 张图片。
-    - 中文识别模型： PaddleOCR 自建的中文数据集，覆盖街景、网图、文档、手写多个场景，其中文本识别包含 1.1w 张图片。
-    - ch_SVTRv2_rec：<a href="https://aistudio.baidu.com/competition/detail/1131/0/introduction">PaddleOCR算法模型挑战赛 - 赛题一：OCR端到端识别任务</a>A榜评估集。
-    - ch_RepSVTR_rec：<a href="https://aistudio.baidu.com/competition/detail/1131/0/introduction">PaddleOCR算法模型挑战赛 - 赛题一：OCR端到端识别任务</a>B榜评估集。
-    - 英文识别模型：PaddleX 自建的英文数据集。
-    - 多语言识别模型：PaddleX 自建的多语种数据集。
-  - **硬件配置**：
-    - GPU：NVIDIA Tesla T4
-    - CPU：Intel Xeon Gold 6271C @ 2.60GHz
-    - 其他环境：Ubuntu 20.04 / cuDNN 8.6 / TensorRT 8.5.2.2
+  <ul>
+      <li><b>性能测试环境</b>
+          <ul>
+            <li><strong>测试数据集：
+             </strong>
+                <ul>
+                  <li>文档图像方向分类模型：PaddleX 自建的数据集，覆盖证件和文档等多个场景，包含 1000 张图片。</li>
+                  <li>版面区域检测模型：PaddleOCR 自建的版面区域检测数据集，包含中英文论文、杂志、合同、书本、试卷和研报等常见的 500 张文档类型图片。</li>
+                  <li>表格版面检测模型：PaddleOCR 自建的版面表格区域检测数据集，包含中英文 7835 张带有表格的论文文档类型图片。</li>
+                  <li>3类版面检测模型：PaddleOCR 自建的版面区域检测数据集，包含中英文论文、杂志和研报等常见的 1154 张文档类型图片。</li>
+                  <li> 5类英文文档区域检测模型：<a href="https://developer.ibm.com/exchanges/data/all/publaynet">PubLayNet</a> 的评估数据集，包含英文文档的 11245 张图片。</li>
+                  <li>17类区域检测模型：PaddleOCR 自建的版面区域检测数据集，包含中英文论文、杂志和研报等常见的 892 张文档类型图片。</li>
+                  <li>表格结构识别模型：PaddleX 内部自建高难度中文表格识别数据集。</li>
+                  <li>表格单元格检测模型：PaddleX 内部自建评测集。</li>
+                  <li>表格分类模型：PaddleX 内部自建评测集。</li>
+                  <li>文本检测模型：PaddleOCR 自建的中文数据集，覆盖街景、网图、文档、手写多个场景，其中检测包含 500 张图片。</li>
+                  <li>中文识别模型： PaddleOCR 自建的中文数据集，覆盖街景、网图、文档、手写多个场景，其中文本识别包含 1.1w 张图片。</li>
+                  <li>ch_SVTRv2_rec：<a href="https://aistudio.baidu.com/competition/detail/1131/0/introduction">PaddleOCR算法模型挑战赛 - 赛题一：OCR端到端识别任务</a>A榜评估集。</li>
+                  <li>ch_RepSVTR_rec：<a href="https://aistudio.baidu.com/competition/detail/1131/0/introduction">PaddleOCR算法模型挑战赛 - 赛题一：OCR端到端识别任务</a>B榜评估集。</li>
+                  <li>英文识别模型：PaddleX 自建的英文数据集。</li>
+                  <li>多语言识别模型：PaddleX 自建的多语种数据集。</li>
+                </ul>
+             </li>
+              <li><strong>硬件配置：</strong>
+                  <ul>
+                      <li>GPU：NVIDIA Tesla T4</li>
+                      <li>CPU：Intel Xeon Gold 6271C @ 2.60GHz</li>
+                      <li>其他环境：Ubuntu 20.04 / cuDNN 8.6 / TensorRT 8.5.2.2</li>
+                  </ul>
+              </li>
+          </ul>
+      </li>
+      <li><b>推理模式说明</b></li>
+  </ul>
 
-- **推理模式说明**
-
-| 模式        | GPU配置                          | CPU配置          | 加速技术组合                                |
-|-------------|----------------------------------|------------------|---------------------------------------------|
-| 常规模式    | FP32精度 / 无TRT加速             | FP32精度 / 8线程       | PaddleInference                             |
-| 高性能模式  | 选择先验精度类型和加速策略的最优组合         | FP32精度 / 8线程       | 选择先验最优后端（Paddle/OpenVINO/TRT等） |
+<table border="1">
+    <thead>
+        <tr>
+            <th>模式</th>
+            <th>GPU配置</th>
+            <th>CPU配置</th>
+            <th>加速技术组合</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>常规模式</td>
+            <td>FP32精度 / 无TRT加速</td>
+            <td>FP32精度 / 8线程</td>
+            <td>PaddleInference</td>
+        </tr>
+        <tr>
+            <td>高性能模式</td>
+            <td>选择先验精度类型和加速策略的最优组合</td>
+            <td>FP32精度 / 8线程</td>
+            <td>选择先验最优后端（Paddle/OpenVINO/TRT等）</td>
+        </tr>
+    </tbody>
+</table>
 
 </details>
 
@@ -895,8 +924,58 @@ for res in output:
 <li><b>float</b>：大于 <code>0</code> 的任意浮点数
     <li><b>None</b>：如果设置为 <code>None</code>, 将默认使用产线初始化的该参数值 <code>0.0</code>。即不设阈值</li></li></ul></td>
 <td><code>None</code></td>
+</tr>
+<td><code>use_table_cells_ocr_results</code></td>
+<td>是否启用单元格OCR模式，不启用时采用全局OCR结果填充至HTML表格，启用时逐个单元格做OCR并填充至HTML表格（会增加耗时）。二者在不同场景下性能不同，请根据实际情况选择。</td>
+<td><code>bool</code></td>
+<td>
+<ul>
+<li><b>bool</b>：<code>True</code> 或者 <code>False</code>
+<td><code>False</code></td>
+</tr>
+<td><code>use_e2e_wired_table_rec_model</code></td>
+<td>是否启用有线表格端到端预测模式，不启用时采用表格单元格检测模型预测结果填充至HTML表格，启用时采用端到端表格结构识别模型的单元格预测结果填充至HTML表格。二者在不同场景下性能不同，请根据实际情况选择。</td>
+<td><code>bool</code></td>
+<td>
+<ul>
+<li><b>bool</b>：<code>True</code> 或者 <code>False</code>
+<td><code>False</code></td>
+</tr>
+<td><code>use_e2e_wireless_table_rec_model</code></td>
+<td>是否启用无线表格端到端预测模式，不启用时采用表格单元格检测模型预测结果填充至HTML表格，启用时采用端到端表格结构识别模型的单元格预测结果填充至HTML表格。二者在不同场景下性能不同，请根据实际情况选择。</td>
+<td><code>bool</code></td>
+<td>
+<ul>
+<li><b>bool</b>：<code>True</code> 或者 <code>False</code>
+<td><code>False</code></td>
 
 </tr></table>
+
+<b>如果您需要使用端到端表格结构识别模型，只需在产线配置文件中将对应的表格结构识别模型替换为端到端表格结构识别模型，然后直接加载修改后的配置文件并修改对应的`predict()` 方法参数即可</b>。例如，如果您需要使用 SLANet_plus 对无线表格做端到端表格识别，只需将配置文件中 `WirelessTableStructureRecognition` 中的 `model_name` 替换为 SLANet_plus（如下所示），并在预测时指定 `use_e2e_wireless_table_rec_model=True` 即可，其余部分无需修改，此时无线表单元格检测模型将不会生效，而是直接使用 SLANet_plus 进行端到端表格识别。
+
+```yaml
+SubModules:
+  WiredTableStructureRecognition:
+    module_name: table_structure_recognition
+    model_name: SLANeXt_wired
+    model_dir: null
+
+  WirelessTableStructureRecognition:
+    module_name: table_structure_recognition
+    model_name: SLANet_plus  # 替换为需使用的端到端表格结构识别模型
+    model_dir: null
+
+  WiredTableCellsDetection:
+    module_name: table_cells_detection
+    model_name: RT-DETR-L_wired_table_cell_det
+    model_dir: null
+
+  WirelessTableCellsDetection:
+    module_name: table_cells_detection
+    model_name: RT-DETR-L_wireless_table_cell_det
+    model_dir: null
+```
+
 
 （3）对预测结果进行处理，每个样本的预测结果均为对应的Result对象，且支持打印、保存为图片、保存为`xlsx`文件、保存为`HTML`文件、保存为`json`文件的操作:
 
@@ -1278,6 +1357,48 @@ for res in output:
 <td>请参阅产线对象中 <code>predict</code> 方法的 <code>text_rec_score_thresh</code> 参数相关说明。</td>
 <td>否</td>
 </tr>
+<tr>
+<td><code>useTableCellsOcrResults</code></td>
+<td><code>boolean</code></td>
+<td>请参阅产线对象中 <code>predict</code> 方法的 <code>use_table_cells_ocr_results</code> 参数相关说明。</td>
+<td>否</td>
+</tr>
+<tr>
+<td><code>useE2eWiredTableRecModel</code></td>
+<td><code>boolean</code></td>
+<td>请参阅产线对象中 <code>predict</code> 方法的 <code>use_e2e_wired_table_rec_model</code> 参数相关说明。</td>
+<td>否</td>
+</tr>
+<tr>
+<td><code>useE2eWirelessTableRecModel</code></td>
+<td><code>boolean</code></td>
+<td>请参阅产线对象中 <code>predict</code> 方法的 <code>use_e2e_wireless_table_rec_model</code> 参数相关说明。</td>
+<td>否</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>请求处理成功时，响应体的<code>result</code>具有如下属性：</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>名称</th>
+<th>类型</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>tableRecResults</code></td>
+<td><code>object</code></td>
+<td>表格识别结果。数组长度为1（对于图像输入）或文档页数与10中的较小者（对于PDF输入）。对于PDF输入，数组中的每个元素依次表示PDF文件中每一页的处理结果。</td>
+</tr>
+<tr>
+<td><code>dataInfo</code></td>
+<td><code>object</code></td>
+<td>输入数据信息。</td>
+</tr>
 </tbody>
 </table>
 <p><code>tableRecResults</code>中的每个元素为一个<code>object</code>，具有如下属性：</p>
@@ -1359,37 +1480,37 @@ for i, res in enumerate(result["tableRecResults"]):
 <tr>
 <td>表格结分类错误</td>
 <td>表格分类模块</td>
-<td><a href="../../../module_usage/tutorials/ocr_modules/table_classification.md">链接</a></td>
+<td><a href="https://paddlepaddle.github.io/PaddleX/latest/module_usage/tutorials/ocr_modules/table_classification.html">链接</a></td>
 </tr>
 <tr>
 <td>表格单元格定位错误</td>
 <td>表格单元格检测模块</td>
-<td><a href="../../../module_usage/tutorials/ocr_modules/table_cells_detection.md">链接</a></td>
+<td><a href="https://paddlepaddle.github.io/PaddleX/latest/module_usage/tutorials/ocr_modules/table_cells_detection.html">链接</a></td>
 </tr>
 <tr>
 <td>表格结构识别错误</td>
 <td>表格结构识别模块</td>
-<td><a href="../../../module_usage/tutorials/ocr_modules/table_structure_recognition.md">链接</a></td>
+<td><a href="https://paddlepaddle.github.io/PaddleX/latest/module_usage/tutorials/ocr_modules/table_structure_recognition.html">链接</a></td>
 </tr>
 <tr>
 <td>未能成功检测到表格所在区域</td>
 <td>版面区域检测模块</td>
-<td><a href="../../../module_usage/tutorials/ocr_modules/layout_detection.md">链接</a></td>
+<td><a href="https://paddlepaddle.github.io/PaddleX/latest/module_usage/tutorials/ocr_modules/layout_detection.html">链接</a></td>
 </tr>
 <tr>
 <td>文本存在漏检</td>
 <td>文本检测模块</td>
-<td><a href="../../../module_usage/tutorials/ocr_modules/text_detection.md">链接</a></td>
+<td><a href="https://paddlepaddle.github.io/PaddleX/latest/module_usage/tutorials/ocr_modules/text_detection.html">链接</a></td>
 </tr>
 <tr>
 <td>文本内容都不准</td>
 <td>文本识别模块</td>
-<td><a href="../../../module_usage/tutorials/ocr_modules/text_recognition.md">链接</a></td>
+<td><a href="https://paddlepaddle.github.io/PaddleX/latest/module_usage/tutorials/ocr_modules/text_recognition.html">链接</a></td>
 </tr>
 <tr>
 <td>整图旋转矫正不准</td>
 <td>文档图像方向分类模块</td>
-<td><a href="../../../module_usage/tutorials/ocr_modules/doc_img_orientation_classification.md">链接</a></td>
+<td><a href="https://paddlepaddle.github.io/PaddleX/latest/module_usage/tutorials/ocr_modules/doc_img_orientation_classification.html">链接</a></td>
 </tr>
 <tr>
 <td>图像扭曲矫正不准</td>
@@ -1465,12 +1586,12 @@ SubPipelines:
         limit_side_len: 960
         limit_type: max
         thresh: 0.3
-        box_thresh: 0.6
+        box_thresh: 0.4
         unclip_ratio: 2.0
 
       TextRecognition:
         module_name: text_recognition
-        model_name: PP-OCRv4_server_rec
+        model_name: PP-OCRv4_server_rec_doc
         model_dir: null # 替换为微调后文本识别的模型权重路径
         batch_size: 1
         score_thresh: 0

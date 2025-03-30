@@ -144,6 +144,11 @@ PIPELINE_ARGUMENTS = {
     ],
     "table_recognition": [
         {
+            "name": "--use_table_cells_ocr_results",
+            "type": bool,
+            "help": "Determines whether to use cells OCR results",
+        },
+        {
             "name": "--use_doc_orientation_classify",
             "type": bool,
             "help": "Determines whether to use document preprocessing",
@@ -195,6 +200,21 @@ PIPELINE_ARGUMENTS = {
         },
     ],
     "table_recognition_v2": [
+        {
+            "name": "--use_table_cells_ocr_results",
+            "type": bool,
+            "help": "Determines whether to use cells OCR results",
+        },
+        {
+            "name": "--use_e2e_wired_table_rec_model",
+            "type": bool,
+            "help": "Determines whether to use end-to-end wired table recognition model",
+        },
+        {
+            "name": "--use_e2e_wireless_table_rec_model",
+            "type": bool,
+            "help": "Determines whether to use end-to-end wireless table recognition model",
+        },
         {
             "name": "--use_doc_orientation_classify",
             "type": bool,
@@ -264,7 +284,7 @@ PIPELINE_ARGUMENTS = {
         },
         {
             "name": "--layout_threshold",
-            "type": float,
+            "type": custom_type(Optional[Union[float, Dict[int, float]]]),
             "help": "Determines confidence threshold for layout detection",
         },
         {
@@ -274,12 +294,12 @@ PIPELINE_ARGUMENTS = {
         },
         {
             "name": "--layout_unclip_ratio",
-            "type": float,
+            "type": custom_type(Optional[Union[float, Tuple[float, float], Dict[int, Tuple]]]),
             "help": "Determines unclip ratio for layout detection boxes",
         },
         {
             "name": "--layout_merge_bboxes_mode",
-            "type": str,
+            "type": custom_type(Optional[Union[str, Dict[int, str]]]),
             "help": "Determines merge mode for layout detection bboxes, 'union', 'large' or 'small'",
         },
         {
@@ -351,7 +371,7 @@ PIPELINE_ARGUMENTS = {
         },
         {
             "name": "--layout_threshold",
-            "type": float,
+            "type": custom_type(Optional[Union[float, Dict[int, float]]]),
             "help": "Determines confidence threshold for layout detection",
         },
         {
@@ -361,12 +381,12 @@ PIPELINE_ARGUMENTS = {
         },
         {
             "name": "--layout_unclip_ratio",
-            "type": float,
+            "type": custom_type(Optional[Union[float, Tuple[float, float], Dict[int, Tuple]]]),
             "help": "Determines unclip ratio for layout detection boxes",
         },
         {
             "name": "--layout_merge_bboxes_mode",
-            "type": str,
+            "type": custom_type(Optional[Union[str, Dict[int, str]]]),
             "help": "Determines merge mode for layout detection bboxes, 'union', 'large' or 'small'",
         },
         {
@@ -430,7 +450,7 @@ PIPELINE_ARGUMENTS = {
             "help": "Sets the score threshold for text recognition.",
         },
     ],
-    "layout_parsing_v2": [
+    "PP-StructureV3": [
         {
             "name": "--use_doc_orientation_classify",
             "type": bool,
@@ -468,7 +488,7 @@ PIPELINE_ARGUMENTS = {
         },
         {
             "name": "--layout_threshold",
-            "type": float,
+            "type": custom_type(Optional[Union[float, Dict[int, float]]]),
             "help": "Determines confidence threshold for layout detection",
         },
         {
@@ -478,12 +498,12 @@ PIPELINE_ARGUMENTS = {
         },
         {
             "name": "--layout_unclip_ratio",
-            "type": float,
+            "type": custom_type(Optional[Union[float, Tuple[float, float], Dict[int, Tuple]]]),
             "help": "Determines unclip ratio for layout detection boxes",
         },
         {
             "name": "--layout_merge_bboxes_mode",
-            "type": str,
+            "type": custom_type(Optional[Union[str, Dict[int, str]]]),
             "help": "Determines merge mode for layout detection bboxes, 'union', 'large' or 'small'",
         },
         {
@@ -546,6 +566,21 @@ PIPELINE_ARGUMENTS = {
             "type": float,
             "help": "Sets the score threshold for text recognition.",
         },
+        {
+            "name": "--use_table_cells_ocr_results",
+            "type": bool,
+            "help": "Determines whether to use cells OCR results",
+        },
+        {
+            "name": "--use_e2e_wired_table_rec_model",
+            "type": bool,
+            "help": "Determines whether to use end-to-end wired table recognition model",
+        },
+        {
+            "name": "--use_e2e_wireless_table_rec_model",
+            "type": bool,
+            "help": "Determines whether to use end-to-end wireless table recognition model",
+        },
     ],
     "ts_forecast": None,
     "ts_anomaly_detection": None,
@@ -568,7 +603,7 @@ PIPELINE_ARGUMENTS = {
         },
         {
             "name": "--layout_threshold",
-            "type": float,
+            "type": custom_type(Optional[Union[float, Dict[int, float]]]),
             "help": "Sets the layout threshold for layout detection.",
         },
         {
@@ -578,12 +613,12 @@ PIPELINE_ARGUMENTS = {
         },
         {
             "name": "--layout_unclip_ratio",
-            "type": float,
+            "type": custom_type(Optional[Union[float, Tuple[float, float], Dict[int, Tuple]]]),
             "help": "Sets the layout unclip ratio for layout detection.",
         },
         {
             "name": "--layout_merge_bboxes_mode",
-            "type": str,
+            "type": custom_type(Optional[Union[str, Dict[int, str]]]),
             "help": "Sets the layout merge bboxes mode for layout detection.",
         },
     ],
